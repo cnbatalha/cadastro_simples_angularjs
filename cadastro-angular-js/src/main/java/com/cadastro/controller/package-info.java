@@ -5,4 +5,4 @@
  * @author Carlos
  *
  */
-package cadastro.controller;
+package com.cadastro.controller;

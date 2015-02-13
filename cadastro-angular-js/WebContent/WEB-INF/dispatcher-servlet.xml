@@ -12,10 +12,15 @@
 	<context:component-scan base-package="cadastro.controller" />
 
 	<mvc:annotation-driven />
+	
+	<mvc:resources mapping="/static/**" location="/static/" />
+	<mvc:resources mapping="/resources/**" location="/resources/" /> 
+	
+	<mvc:default-servlet-handler />
 
 	<!-- Specify a view resolver for JSP files -->
 	<bean id="viewResolve"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+		p:prefix="/WEB-INF/static/" p:suffix=".html" />
 
 </beans>

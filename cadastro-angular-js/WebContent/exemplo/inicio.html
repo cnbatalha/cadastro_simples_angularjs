@@ -25,12 +25,24 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in itens" >
-				<td> <strong>{{ item.produto }}</strong> </td>
-				<td> {{ item.quantidade }} </td>				
+				<tr ng-repeat="item in itens">
+					<td><strong>{{ item.produto }}</strong></td>
+					<td>{{ item.quantidade }}</td>
 			</tbody>
 		</table>
+
+		<h1>Adicionando produto</h1>
+
+		<form class="form-inline" name="formItem">
+			<input type="text" ng-model="item.produto"> <input
+				type="number" ng-model="item.quantidade">
+			<button ng-click="adicionarItem()">adicionar</button>
+		</form>
+
+
 	</div>
+
+
 
 </body>
 </html>

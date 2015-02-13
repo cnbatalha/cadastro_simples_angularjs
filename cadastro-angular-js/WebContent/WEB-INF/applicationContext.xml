@@ -10,12 +10,12 @@
         				   http://www.springframework.org/schema/jee 
         				   http://www.springframework.org/schema/jee/spring-jee.xsd
         				   	http://www.springframework.org/schema/mvc
-						    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd" >
+						    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 
 	<context:annotation-config />
 
-
+	<mvc:resources mapping="/static/**" location="/static/" />
 
 	<!-- bean id="catequeseDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
 		<property name="driverClassName" value="com.mysql.jdbc.GoogleDriver" /> <property 

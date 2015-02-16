@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+<script src="http://code.angularjs.org/1.0.1/angular-1.0.1.min.js"></script>
+<script type="text/javascript" src="server.js">
+	
+</script>
+</head>
+<body>
+	<h1>Lista de Garcom</h1>
+
+	<div ng-controller="RestController">
+
+		nome: <p> {{ statusreq }} </p>
+		nome: <p> {{ garcons }} </p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Codigo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in garcons">
+					<td><strong>{{ item.nmGar }}</strong></td>
+					<td>{{ item.nroGar }}</td>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

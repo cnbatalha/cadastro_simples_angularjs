@@ -7,6 +7,17 @@
 <script type="text/javascript" src="inicio.js">
 	
 </script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<h1>olá mundo 2</h1>
@@ -16,7 +27,15 @@
 
 	<h1>Exibindo Itens</h1>
 
-	<div ng-controller="ListaComprasController">
+	<div class="control-group" ng-controller="ListaComprasController">
+
+		Search: <input ng-model="query"> Sort by: <select
+			ng-model="orderProp">
+			<option value="produto">Produto</option>
+			<option value="quantidade">Quantidade</option>
+		</select>
+
+
 		<table>
 			<thead>
 				<tr>
@@ -25,7 +44,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in itens">
+				<tr
+					ng-repeat="item in itens | filter : query | orderBy : orderProp ">
 					<td><strong>{{ item.produto }}</strong></td>
 					<td>{{ item.quantidade }}</td>
 			</tbody>

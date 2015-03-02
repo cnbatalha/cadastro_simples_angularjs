@@ -9,7 +9,8 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
+		<org.springframework.version>4.1.0.RELEASE</org.springframework.version>
+		<org.springframework.SECURITY.version>3.2.6.RELEASE</org.springframework.SECURITY.version>		
 		<appengine.target.version>1.9.17</appengine.target.version>
 	</properties>
 
@@ -51,11 +52,11 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<dependency>
+		<!-- dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-asm</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
+			<version>3.1.4.RELEASE</version>
+		</dependency -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -109,19 +110,19 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>${org.springframework.version}</version>
+			<version>${org.springframework.SECURITY.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>${org.springframework.version}</version>
+			<version>${org.springframework.SECURITY.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
-			<version>${org.springframework.version}</version>
+			<version>${org.springframework.SECURITY.version}</version>
 		</dependency>
 
 		<dependency>
@@ -142,11 +143,6 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jpa</artifactId>
-			<version>2.0.8</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.data</groupId>

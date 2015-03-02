@@ -21,7 +21,14 @@ public class CatequistaController {
 
 	@RequestMapping(value = "/catequista", method = RequestMethod.GET)
 	public @ResponseBody Collection<Catequista> getLista() {
+
 		return Lists.newArrayList(catequistaRepository.findAll());
+	}
+
+	@RequestMapping(value = "/catequista/teste", method = RequestMethod.GET)
+	public @ResponseBody String getTeste() {
+
+		return "it's work!";
 	}
 
 }

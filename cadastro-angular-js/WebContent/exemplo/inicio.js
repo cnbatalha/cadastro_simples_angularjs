@@ -13,6 +13,8 @@ function ListaComprasController($scope) {
 		comprado : false
 	} ];
 
+	
+	
 	$scope.adicionarItem = function() {
 		$scope.itens.push({
 			produto : $scope.item.produto,

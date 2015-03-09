@@ -1,17 +1,24 @@
-angular.module('cadastro', [ 'ngRoute' ]).config(function($routeProvider) {
+angular.module('cadastro', [ 'ngRoute', 'appControllers' ]).config(
+		function($routeProvider) {
 
-	$routeProvider.when('/', {
-		templateUrl : 'index.html',
-		controller : 'home'
-	}).when('/login', {
-		templateUrl : 'login.html',
-		controller : 'navigation'
-	}).when('/catequista', {
-		templateUrl : 'templates/catequista/catequista.html',
-		controller : 'catequistaController'
-	}).otherwise('/');
+			$routeProvider.when('/', {
+				templateUrl : 'home.html',
+				controller : 'home'
+			}).when('/login', {
+				templateUrl : 'login.html',
+				controller : 'navigation'
+			}).when('/catequizando', {
+				templateUrl : 'templates/catequizando/catequizandoList.html',
+				controller : 'catequizandoController'
+			}).when('/catequizandoadd', {
+				templateUrl : 'templates/catequizando/catequizando.html',
+				controller : 'catequizandoController'
+			}).when('/catequista', {
+				templateUrl : 'templates/catequista/catequistaList.html',
+				controller : 'catequistaController'
+			}).otherwise('/');
 
-}).controller('home', function($scope, $http) {
+		}).controller('home', function($scope, $http) {
 	/*
 	 * $http.get('/resource/').success(function(data) { $scope.greeting = data;
 	 * });

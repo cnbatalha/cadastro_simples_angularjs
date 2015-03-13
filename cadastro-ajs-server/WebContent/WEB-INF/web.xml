@@ -6,10 +6,10 @@
 
 	<display-name>Archetype Created Web Application</display-name>
 
-	<context-param>
+	<!-- context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:/repository-config.xml</param-value>
-	</context-param>
+	</context-param -->
 
 	<context-param>
 		<param-name>contextClass</param-name>
@@ -55,14 +55,14 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
-	<filter>
+	<!-- filter>
 		<filter-name>cors</filter-name>
 		<filter-class>com.cadastro.AccessFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
 		<filter-name>cors</filter-name>
-		<url-pattern>/</url-pattern>
-	</filter-mapping>
+		<url-pattern>comingsoon</url-pattern>
+	</filter-mapping -->
 
 </web-app>

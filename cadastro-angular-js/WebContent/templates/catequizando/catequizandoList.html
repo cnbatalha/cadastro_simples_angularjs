@@ -1,22 +1,32 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<div class="col-xs-10">
-	<div>
-		<nav class="navbar navbar-default">
-			<ul class="nav nav-pills">
-				<li><a href="#/catequizandoadd">Novo</a></li>
-			</ul>
-		</nav>
+
+<div class="row">
+	<div class="col-md-2"></div>
+
+	<div class="col-xs-10">
+		<div>
+			<nav class="navbar navbar-default">
+				<ul class="nav nav-pills">
+					<li><a href="#/catequizando" class="btn btn-default">Novo</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div>
+			<table class="table">
+				<tr>
+					<td>Id</td>
+					<td>Nome</td>
+					<td>Dt. Nascimento</td>
+					<td>Mãe</td>
+				</tr>
+				<tr ng-repeat="c in registros">
+					<td><a href="#/catequizando/{{c.id}}">#{{c.id}}</a></td>
+					<td>{{c.nome}}</td>
+					<td>{{formatData(c.nascimento)}}</td>
+					<td>{{c.nomeMae}}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
-	<div>
-		<table class="table">
-			<tr>
-				<td>Id</td>
-				<td>Nome</td>
-				<td>Dt. Nascimento</td>
-				<td>Mãe</td>
-			</tr>
-			<tr>
-			</tr>
-		</table>
-	</div>
+
 </div>

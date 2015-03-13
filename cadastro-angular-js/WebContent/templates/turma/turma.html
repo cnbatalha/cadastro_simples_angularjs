@@ -1,0 +1,33 @@
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<div class="row">
+	<div class="col-md-3"></div>
+
+	<div class="col-md-9">
+
+		<div class="panel-group" id="accordion">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">Turma : {{turma.nome}} : 0</h4>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+						<tr>
+							<td>ID</td>
+							<td>Nome</td>
+							<td>Nascimento</td>
+							<td>Contato</td>
+						</tr>
+						<tr ng-repeat="c in registros">
+							<td><a href="#/catequizando/{{c.id}}">#{{c.id}}</a></td>
+							<td>{{c.nome}}</td>
+							<td>{{c.nascimento}}</td>
+							<td>{{}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

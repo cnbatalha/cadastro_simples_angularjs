@@ -5,6 +5,7 @@
 	<persistence-unit name="cadastro-ajs-server">
 		<class>com.cadastro.model.Catequista</class>
 		<class>com.cadastro.model.Catequizando</class>
+		<class>com.cadastro.model.Turma</class>
 		<properties>
 
 			<!-- SEM as propriedades URL, login, senha e driver -->

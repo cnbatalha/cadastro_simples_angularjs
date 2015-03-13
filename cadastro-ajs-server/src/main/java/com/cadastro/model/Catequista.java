@@ -4,10 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "catequista")
 public class Catequista {
 
+	
 	@Id
 	private Integer id;
 	private String nome;

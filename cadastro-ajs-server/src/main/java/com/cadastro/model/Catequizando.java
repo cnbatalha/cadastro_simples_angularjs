@@ -2,7 +2,10 @@ package com.cadastro.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,7 +14,9 @@ import javax.persistence.Table;
 public class Catequizando {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	private String nome;
 	private Date nascimento;
 	private String nomePai;
@@ -23,7 +28,9 @@ public class Catequizando {
 	private String sexo;
 	private String endereco;
 	private String observacao;
-	
+
+	@Column(name = "id_turma_atual")
+	private String idTurmaAtual;
 
 	public Integer getId() {
 		return id;
@@ -95,6 +102,38 @@ public class Catequizando {
 
 	public void setSerieEscola(String serieEscola) {
 		this.serieEscola = serieEscola;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public String getIdTurmaAtual() {
+		return idTurmaAtual;
+	}
+
+	public void setIdTurmaAtual(String idTurmaAtual) {
+		this.idTurmaAtual = idTurmaAtual;
 	}
 
 }

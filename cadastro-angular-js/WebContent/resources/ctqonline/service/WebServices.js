@@ -13,7 +13,7 @@ catequeseServices.service('webService', function($http, $location) {
 	var protocol = $location.protocol();
 
 	this.urlBase = protocol + '://' + host + ':' + port;
-
+	//this.urlBase = 'http://sistematic.serveftp.net:8080';
 	this.turmas = new Array();
 
 	/* servico retorna o plano de Producao do Id informado */
@@ -46,6 +46,21 @@ catequeseServices.service('webService', function($http, $location) {
 
 	};
 
+	this.getCatequizandoNome = function(nome) {
+
+		return $http.get(
+				this.urlBase + '/cadastro-ajs-server/catequizando/'
+						+ nome).then(function(value) {
+			console.log(value.data);
+			return value.data;
+		}, function(reason) {
+			console.log(reason);
+		}, function(value) {
+
+		});
+
+	};
+	
 	this.addCatequizando = function(Catequizando) {
 
 		var json = angular.toJson(Catequizando);

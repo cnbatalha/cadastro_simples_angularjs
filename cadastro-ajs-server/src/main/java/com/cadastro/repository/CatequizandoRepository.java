@@ -11,4 +11,6 @@ public interface CatequizandoRepository extends
 
 	public Collection<Catequizando> findByIdTurmaAtual(Integer idTurma);
 
+	public Collection<Catequizando> findByNome(String nome);
+
 }

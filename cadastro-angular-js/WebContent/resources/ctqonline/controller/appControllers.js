@@ -7,6 +7,8 @@ appControllers.controller('catequistaController', function($scope) {
 appControllers.controller('catequizandoController', function($scope, $http,
 		$routeParams, webService) {
 
+	var controller = this;
+
 	var idCatequizando = $routeParams.id;
 	$scope.catequizando = {};
 
@@ -18,6 +20,7 @@ appControllers.controller('catequizandoController', function($scope, $http,
 
 	$scope.idTurma = {};
 	$scope.turmaAtual = {};
+	$scope.inputSearch = '';
 
 	console.log(webService.turmas);
 
@@ -74,6 +77,18 @@ appControllers.controller('catequizandoController', function($scope, $http,
 		});
 	}
 
+	$scope.buscarRegistro = function() {
+
+		webService.getCatequizandoNome(controller.inputSearch).then(
+				function(value) {
+					$scope.registros = value;
+				}, function(reason) {
+
+				}, function(value) {
+
+				});
+	}
+
 	$scope.formatData = function(data) {
 		dateFormat = new Date(data);
 		return dateFormat.toLocaleDateString();
@@ -112,7 +127,7 @@ appControllers.controller('turmaListaController', function($scope, $http,
 	$scope.registros = [];
 
 	var fetchRegistros = function() {
-
+		console.log('chamou');
 		webService.getTurmaCatequizandoList(idTurma).then(function(value) {
 			$scope.registros = value;
 		});

@@ -22,7 +22,7 @@
 						<tr ng-repeat="c in registros">
 							<td><a href="#/catequizando/{{c.id}}">#{{c.id}}</a></td>
 							<td>{{c.nome}}</td>
-							<td>{{c.nascimento}}</td>
+							<td>{{formatData(c.nascimento)}}</td>
 							<td>{{}}</td>
 						</tr>
 					</table>

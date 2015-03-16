@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html ng-app="cadastro">
+<html ng-app="cadastro"> 
 <head>
 <meta charset="ISO-8859-1">
-<title>Tutorial Cadastro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catequese OnLine</title>
 <link rel="stylesheet" type="text/css"
 	href="resources/css/bootstrap.min.css">
+
+<script src="resources/angularjs/angular.min.js"></script>
+<script src="resources/angularjs/angular-route.min.js"></script>
+
+<script src="resources/js/libs/jquery.min.js"></script>
+
+<script src="resources/js/bootstrap.js"></script>
+
+<script src="resources/ctqonline/controller/appControllers.js"></script>
+<script src="resources/ctqonline/model/catequizando.js"></script>
+
+<script src="resources/ctqonline/service/WebServices.js"></script>
+
+<script src="cadastro.js"></script>
+
 </head>
 <body>
 
@@ -12,32 +28,26 @@
 		<nav ng-controller="navigation" class="navbar navbar-default">
 			<ul class="nav nav-pills">
 				<li class="active"><a href="#/">home</a></li>
-				<li><a href="#/login">login</a></li>
+				<li ng-show="false"><a href="#/login">login</a></li>
 				<li><a href="#/turmalist">Turma</a></li>
-				<li><a href="#/catequista">Catequista</a></li>
+				<li ng-show="false"><a href="#/catequista">Catequista</a></li>
 				<li><a href="#/catequizandolist">Catequizando</a></li>
-				<li ng-show="authenticated"><a href="">Catequitas</a></li>
 				<li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
 			</ul>
 		</nav>
 
 		<div ng-view></div>
-
+		<hr>
+		<footer>
+			<p>Paróquia Nossa Senhora da Glória</p>
+			<p>
+				<a href="paroquiansagloria.com.br">paroquiansagloria.com.br</a>
+			</p>
+		</footer>
 	</div>
 
-	<script src="resources/angularjs/angular.min.js"></script>
-	<script src="resources/angularjs/angular-route.min.js"></script>
 
-	<script src="resources/js/libs/jquery.min.js"></script>
 
-	<script src="resources/js/bootstrap.js"></script>
-
-	<script src="resources/ctqonline/controller/appControllers.js"></script>
-	<script src="resources/ctqonline/model/catequizando.js"></script>
-
-	<script src="resources/ctqonline/service/WebServices.js"></script>
-
-	<script src="cadastro.js"></script>
 
 
 </body>

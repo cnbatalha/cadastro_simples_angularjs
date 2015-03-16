@@ -30,7 +30,7 @@ public class Catequizando {
 	private String observacao;
 
 	@Column(name = "id_turma_atual")
-	private String idTurmaAtual;
+	private Integer idTurmaAtual;
 
 	public Integer getId() {
 		return id;
@@ -128,11 +128,11 @@ public class Catequizando {
 		this.observacao = observacao;
 	}
 
-	public String getIdTurmaAtual() {
+	public Integer getIdTurmaAtual() {
 		return idTurmaAtual;
 	}
 
-	public void setIdTurmaAtual(String idTurmaAtual) {
+	public void setIdTurmaAtual(Integer idTurmaAtual) {
 		this.idTurmaAtual = idTurmaAtual;
 	}
 

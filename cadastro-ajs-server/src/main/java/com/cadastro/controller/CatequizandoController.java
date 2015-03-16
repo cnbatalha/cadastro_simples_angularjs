@@ -32,6 +32,12 @@ public class CatequizandoController {
 		return catequizandoRepository.findOne(id);
 	}
 
+	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)
+	public @ResponseBody Collection<Catequizando> getCatequizandoByName(
+			@PathVariable("nome") String nome) {
+		return catequizandoRepository.findByNome(nome);
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody Integer add(@RequestBody Catequizando catequizando) {
 		catequizandoRepository.save(catequizando);
@@ -42,6 +48,7 @@ public class CatequizandoController {
 	@RequestMapping(value = "/turma/{idturma}", method = RequestMethod.GET)
 	public @ResponseBody Collection<Catequizando> getListaTurma(
 			@PathVariable("idturma") Integer idTurma) {
+
 		return Lists.newArrayList(catequizandoRepository
 				.findByIdTurmaAtual(idTurma));
 	}

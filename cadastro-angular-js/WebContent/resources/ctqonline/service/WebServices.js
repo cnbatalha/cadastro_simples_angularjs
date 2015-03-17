@@ -49,7 +49,7 @@ catequeseServices.service('webService', function($http, $location) {
 	this.getCatequizandoNome = function(nome) {
 
 		return $http.get(
-				this.urlBase + '/cadastro-ajs-server/catequizando/'
+				this.urlBase + '/cadastro-ajs-server/catequizando/nome/'
 						+ nome).then(function(value) {
 			console.log(value.data);
 			return value.data;

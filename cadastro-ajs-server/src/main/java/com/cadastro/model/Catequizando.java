@@ -29,6 +29,12 @@ public class Catequizando {
 	private String endereco;
 	private String observacao;
 
+	@Column(name = "tel_fixo")
+	private String telCelular;
+
+	@Column(name = "tel_celular")
+	private String telFixo;
+
 	@Column(name = "id_turma_atual")
 	private Integer idTurmaAtual;
 
@@ -38,6 +44,22 @@ public class Catequizando {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getTelCelular() {
+		return telCelular;
+	}
+
+	public void setTelCelular(String telCelular) {
+		this.telCelular = telCelular;
+	}
+
+	public String getTelFixo() {
+		return telFixo;
+	}
+
+	public void setTelFixo(String telFixo) {
+		this.telFixo = telFixo;
 	}
 
 	public String getNome() {

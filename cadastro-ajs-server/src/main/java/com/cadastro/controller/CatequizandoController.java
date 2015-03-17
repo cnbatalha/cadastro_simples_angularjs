@@ -35,7 +35,7 @@ public class CatequizandoController {
 	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)
 	public @ResponseBody Collection<Catequizando> getCatequizandoByName(
 			@PathVariable("nome") String nome) {
-		return catequizandoRepository.findByNome(nome);
+		return catequizandoRepository.findByNomeStartingWith(nome);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

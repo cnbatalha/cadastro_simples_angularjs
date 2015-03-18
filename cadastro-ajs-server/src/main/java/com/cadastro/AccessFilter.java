@@ -28,7 +28,7 @@ public class AccessFilter  implements Filter{
         presponse.setHeader("Access-Control-Allow-Origin", "*");
         presponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         presponse.setHeader("Access-Control-Max-Age", "3600");
-        presponse.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        presponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         chain.doFilter(request, response);
 		
 	}

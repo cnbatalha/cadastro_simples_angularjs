@@ -143,15 +143,30 @@ appControllers.controller('turmaListaController', function($scope, $http,
 		$routeParams, webService) {
 
 	var controller = this;
-
 	var idTurma = $routeParams.id;
+
+	$scope.turma = {};
+	$scope.turmas = webService.turmas;
+	$scope.total = 0;
+
+	var localizaTurma = function(idTurma) {
+		$scope.turma = $.grep($scope.turmas, function(e, i) {
+			return e.id == idTurma;
+		});
+
+		$scope.turma = $scope.turma[0];
+		console.log($scope.turma);
+		return $scope.turma;
+	}
+
+	localizaTurma(idTurma);
 
 	$scope.registros = [];
 
 	var fetchRegistros = function() {
-		console.log('chamou');
 		webService.getTurmaCatequizandoList(idTurma).then(function(value) {
 			$scope.registros = value;
+			$scope.total = $scope.registros.length; 
 		});
 	}
 

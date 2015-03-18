@@ -38,7 +38,7 @@ angular
 
 			otherwise('/');
 
-		}).controller('home', function($scope, $http) {
+		}).controller('home', function($scope, $http, webService) {
 			/*
 			 * $http.get('/resource/').success(function(data) { $scope.greeting =
 			 * data; });

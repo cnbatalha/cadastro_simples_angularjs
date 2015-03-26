@@ -39,10 +39,14 @@ angular
 			otherwise('/');
 
 		}).controller('home', function($scope, $http, webService) {
-			/*
-			 * $http.get('/resource/').success(function(data) { $scope.greeting =
-			 * data; });
-			 */
+
+			$scope.box = function() {
+
+				bootbox.alert("Mensagem alerta", function(result) {
+				});
+
+			}
+
 		}).controller('navigation',
 				function($rootScope, $scope, $http, $location) {
 

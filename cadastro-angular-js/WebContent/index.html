@@ -1,25 +1,12 @@
 <!DOCTYPE html>
-<html ng-app="cadastro"> 
+<html ng-app="cadastro">
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Catequese OnLine</title>
+<title>Catequese OnLine (beta)</title>
+
 <link rel="stylesheet" type="text/css"
-	href="resources/css/bootstrap.min.css">
-
-<script src="resources/angularjs/angular.min.js"></script>
-<script src="resources/angularjs/angular-route.min.js"></script>
-
-<script src="resources/js/libs/jquery.min.js"></script>
-
-<script src="resources/js/bootstrap.js"></script>
-
-<script src="resources/ctqonline/controller/appControllers.js"></script>
-<script src="resources/ctqonline/model/catequizando.js"></script>
-
-<script src="resources/ctqonline/service/WebServices.js"></script>
-
-<script src="cadastro.js"></script>
+	href="resources/css/bootstrap.css">
 
 </head>
 <body>
@@ -37,18 +24,37 @@
 		</nav>
 
 		<div ng-view></div>
-		<hr>
-		<footer>
-			<p>Paróquia Nossa Senhora da Glória</p>
+
+	</div>
+	
+	<hr>
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted" >ParÃ³quia Nossa Senhora da GlÃ³ria</p>
 			<p>
 				<a href="paroquiansagloria.com.br">paroquiansagloria.com.br</a>
 			</p>
-		</footer>
-	</div>
+		</div>
+	</footer>
 
+	<script src="resources/angularjs/angular.min.js"></script>
+	<script src="resources/angularjs/angular-route.min.js"></script>
 
+	<script src="resources/ctqonline/controller/appControllers.js"></script>
+	<script src="resources/ctqonline/model/catequizando.js"></script>
+	
+	<!-- Util -->
+	<script src="resources/ctqonline/util/paginate.js"></script>
 
+	<script src="resources/ctqonline/service/WebServices.js"></script>
 
+	<script src="cadastro.js"></script>
+
+	<script type="text/javascript" src="resources/js/libs/jquery.js"></script>
+
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 
 </body>
+
+<script type="text/javascript" src="resources/js/bootbox.min.js"></script>
 </html>

@@ -24,6 +24,13 @@ appControllers.controller('catequizandoController', function($scope, $http,
 
 	console.log(webService.turmas);
 
+	$scope.setPage = function(indexPage) {
+		fetchRegistros(indexPage);
+	}
+
+	$scope.page = new Paginate($scope.setPage);
+
+	// localiza turma
 	var localizaTurma = function(idTurma) {
 		$scope.turmaAtual = $.grep($scope.turmas, function(e, i) {
 			return e.id == idTurma;
@@ -34,16 +41,18 @@ appControllers.controller('catequizandoController', function($scope, $http,
 
 	$scope.registros = [];
 
-	var fetchRegistros = function() {
+	// carrega todos os registros usando paginacao
+	var fetchRegistros = function(pageIndex) {
 
-		webService.getCatequizandoList().then(function(value) {
-			$scope.registros = value;
+		webService.getCatequizandoList(pageIndex).then(function(value) {
+			$scope.page.loadPage(value);
+			$scope.registros = $scope.page.content;
 		});
 	}
 
 	if (idCatequizando == undefined) {
 		$scope.catequizando = new Catequizando();
-		fetchRegistros();
+		fetchRegistros(0);
 	} else {
 		webService.getCatequizando(idCatequizando).then(
 				function(value) {
@@ -54,14 +63,7 @@ appControllers.controller('catequizandoController', function($scope, $http,
 				});
 	}
 
-	/*
-	 * var fetchTurmas = function() {
-	 * webService.getTurmaList().then(function(value) { $scope.turmas = value;
-	 * }); }
-	 * 
-	 * //fetchTurmas();
-	 */
-
+	// adiciona catequizando
 	$scope.addCatequizando = function() {
 
 		this.catequizando.idTurmaAtual = $scope.turmaAtual.id;
@@ -78,17 +80,17 @@ appControllers.controller('catequizandoController', function($scope, $http,
 		});
 	}
 
-	$scope.buscarRegistro = function() {
-
-		console.log('busca' + $scope.inputSearch);
+	// busca registro de catequizandos por nome
+	$scope.buscarRegistro = function(indexPage) {
 		// caso nao seja informado valor campo para pesquisa retorna todos os
 		// registros
 		if ($scope.inputSearch.length == 0) {
 			fetchRegistros();
 		} else {
-			webService.getCatequizandoNome($scope.inputSearch).then(
+			webService.getCatequizandoNome($scope.inputSearch, indexPage).then(
 					function(value) {
-						$scope.registros = value;
+						$scope.page.loadPage(value)
+						$scope.registros = $scope.page.content;
 					}, function(reason) {
 
 					}, function(value) {
@@ -111,6 +113,14 @@ appControllers.controller('catequizandoController', function($scope, $http,
 		}
 	}
 
+	// caixa para confirmar exclusao de catequizando
+	$scope.removeCatequizando = function(idCatequizando) {
+
+		bootbox.alert('Confirmar exclusão de Catequizando?', function() {
+		});
+	}
+
+	// inicialia dados da tela
 	var resetForm = function() {
 		$scope.catequizando = new Catequizando();
 		$scope.turmaAtual = {};
@@ -166,7 +176,7 @@ appControllers.controller('turmaListaController', function($scope, $http,
 	var fetchRegistros = function() {
 		webService.getTurmaCatequizandoList(idTurma).then(function(value) {
 			$scope.registros = value;
-			$scope.total = $scope.registros.length; 
+			$scope.total = $scope.registros.length;
 		});
 	}
 

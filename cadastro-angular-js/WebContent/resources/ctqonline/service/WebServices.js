@@ -3,6 +3,7 @@ var catequeseServices = angular.module('catequeseServices', []);
 catequeseServices.service('webService', function($http, $location) {
 
 	var service = this;
+	var countRegister = 2;
 
 	var port = $location.port();
 	console.log($location);
@@ -13,14 +14,16 @@ catequeseServices.service('webService', function($http, $location) {
 	var protocol = $location.protocol();
 
 	this.urlBase = protocol + '://' + host + ':' + port;
-	//this.urlBase = 'http://sistematic.serveftp.net:8080';
+	// this.urlBase = 'http://sistematic.serveftp.net:8080';
 	this.turmas = new Array();
 
 	/* servico retorna o plano de Producao do Id informado */
-	this.getCatequizandoList = function() {
+	this.getCatequizandoList = function(pageIndex) {
 
-		return $http.get(this.urlBase + '/cadastro-ajs-server/catequizando')
-				.then(function(value) {
+		return $http.get(
+				this.urlBase + '/cadastro-ajs-server/catequizando/page/'
+						+ pageIndex + '/' + countRegister).then(
+				function(value) {
 					console.log(value.data);
 					return value.data;
 				}, function(reason) {
@@ -46,11 +49,11 @@ catequeseServices.service('webService', function($http, $location) {
 
 	};
 
-	this.getCatequizandoNome = function(nome) {
+	this.removeCatequizando = function(idCatequizando) {
 
-		return $http.get(
-				this.urlBase + '/cadastro-ajs-server/catequizando/nome/'
-						+ nome).then(function(value) {
+		return $http.post(
+				this.urlBase + '/cadastro-ajs-server/catequizando/remove/'
+						+ idCatequizando).then(function(value) {
 			console.log(value.data);
 			return value.data;
 		}, function(reason) {
@@ -60,7 +63,23 @@ catequeseServices.service('webService', function($http, $location) {
 		});
 
 	};
-	
+
+	this.getCatequizandoNome = function(nome, index) {
+
+		return $http.get(
+				this.urlBase + '/cadastro-ajs-server/catequizando/nome/' + nome
+						+ '/page/' + index + '/' + countRegister).then(
+				function(value) {
+					console.log(value.data);
+					return value.data;
+				}, function(reason) {
+					console.log(reason);
+				}, function(value) {
+
+				});
+
+	};
+
 	this.addCatequizando = function(Catequizando) {
 
 		var json = angular.toJson(Catequizando);

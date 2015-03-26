@@ -1,9 +1,9 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <div class="row">
-	<div class="col-md-3"></div>
+	<div class="col-md-2"></div>
 
-	<div class="col-xs-12 col-md-9">
+	<div class="col-md-10">
 		<div>
 			<nav class="navbar navbar-default">
 				<div class="row">
@@ -31,21 +31,47 @@
 		</div>
 		<div>
 			<table class="table">
-				<tr>
-					<td>Id</td>
-					<td>Nome</td>
-					<td>Dt. Nascimento</td>
-					<td>Mãe</td>
-					<td>Turma</td>
-				</tr>
-				<tr ng-repeat="c in registros">
-					<td><a href="#/catequizando/{{c.id}}">#{{c.id}}</a></td>
-					<td>{{c.nome}}</td>
-					<td>{{formatData(c.nascimento)}}</td>
-					<td>{{c.nomeMae}}</td>
-					<td>{{getTurma(c.idTurmaAtual)}}</td>
-				</tr>
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nome</th>
+						<th>Dt. Nascimento</th>
+						<th>Mãe</th>
+						<th>Turma</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="c in registros">
+						<td><a href="#/catequizando/{{c.id}}">#{{c.id}}</a></td>
+						<td>{{c.nome}}</td>
+						<td>{{formatData(c.nascimento)}}</td>
+						<td>{{c.nomeMae}}</td>
+						<td>{{getTurma(c.idTurmaAtual)}}</td>
+						<td><a id="btnRemove" class="btn btn-default btn-xs"
+							ng-click="removeCatequizando(c.id)"> <span
+								class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+						</a></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<td colspan="6">
+						<div align="center">
+							<ul class="pagination">
+								<li ng-class="page.prevPageDisabled()"><a href
+									ng-click="page.prevPage()">« Prev</a></li>
+								<li ng-repeat="n in page.pages"
+									ng-class="{active: n == page.numberPage}" ng-click="setPage(n)">
+									<a>{{n+1}}</a>
+								</li>
+								<li ng-class="page.nextPageDisabled()"><a href
+									ng-click="page.nextPage()">Next »</a></li>
+							</ul>
+						</div>
+					</td>
+				</tfoot>
 			</table>
+
 		</div>
 	</div>
 

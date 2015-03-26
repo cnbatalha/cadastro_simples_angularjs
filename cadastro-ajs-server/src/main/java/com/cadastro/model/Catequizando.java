@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "catequizando")
 public class Catequizando {
@@ -37,6 +39,10 @@ public class Catequizando {
 
 	@Column(name = "id_turma_atual")
 	private Integer idTurmaAtual;
+	
+	@JsonIgnore
+	@Column(name = "situacao_deletado")
+	private String situacao = "N";
 
 	public Integer getId() {
 		return id;
@@ -156,6 +162,14 @@ public class Catequizando {
 
 	public void setIdTurmaAtual(Integer idTurmaAtual) {
 		this.idTurmaAtual = idTurmaAtual;
+	}
+
+	public String getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
 	}
 
 }

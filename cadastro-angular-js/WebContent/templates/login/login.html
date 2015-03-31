@@ -1,0 +1,44 @@
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<br>
+<div class="row">
+	<div class="jumbotron">
+		<h2>Catequese OnLine</h2>
+		<p>Aplicativo para apoiar as atividades dos catequistas da
+			Paróquia Nossa Senhora da Glória-Manaus</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-3">
+		<div class="alert alert-danger" ng-show="error">There was a
+			problem logging in. Please try again.</div>
+		<form role="form" ng-submit="loginUser()">
+			<div class="form-group">
+				<label for="username">Username:</label> <input type="text"
+					class="form-control" id="username" name="username"
+					ng-model="credentials.username" />
+			</div>
+			<div class="form-group">
+				<label for="password">Password:</label> <input type="password"
+					class="form-control" id="password" name="password"
+					ng-model="credentials.password" />
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="col-md-4">
+			<h4 align="center">Catequizandos</h4>
+			<p>Cadastro e gerenciamento de catequizandos, design intuitivo e
+				moderno.</p>
+		</div>
+		<div class="col-md-4">
+			<h4 align="center">Catequistas</h4>
+			<p>Cadastro e gerenciamento de catequistas, gerenciamento de
+				turmas on-line, desing compitível para acesso mobile</p>
+		</div>
+	</div>
+</div>

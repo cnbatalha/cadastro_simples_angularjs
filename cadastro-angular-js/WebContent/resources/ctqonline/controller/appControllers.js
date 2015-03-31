@@ -4,12 +4,12 @@ appControllers.controller('catequistaController', function($scope) {
 
 });
 
-appControllers.controller('catequizandoController', function($scope, $http,
-		$routeParams, webService) {
+appControllers.controller('catequizandoController', function($scope, $http, $routeParams, webService) {
 
 	var controller = this;
 
 	var idCatequizando = $routeParams.id;
+	var filtro = false;
 	$scope.catequizando = {};
 
 	$scope.operacaoOK = false;
@@ -25,7 +25,11 @@ appControllers.controller('catequizandoController', function($scope, $http,
 	console.log(webService.turmas);
 
 	$scope.setPage = function(indexPage) {
-		fetchRegistros(indexPage);
+		if (filtro) {
+			fetchRegistrosNome(indexPage);
+		} else {
+			fetchRegistros(indexPage);
+		}
 	}
 
 	$scope.page = new Paginate($scope.setPage);
@@ -54,13 +58,11 @@ appControllers.controller('catequizandoController', function($scope, $http,
 		$scope.catequizando = new Catequizando();
 		fetchRegistros(0);
 	} else {
-		webService.getCatequizando(idCatequizando).then(
-				function(value) {
-					$scope.catequizando = value;
-					$scope.catequizando.nascimento = new Date(
-							$scope.catequizando.nascimento);
-					localizaTurma($scope.catequizando.idTurmaAtual);
-				});
+		webService.getCatequizando(idCatequizando).then(function(value) {
+			$scope.catequizando = value;
+			$scope.catequizando.nascimento = new Date($scope.catequizando.nascimento);
+			localizaTurma($scope.catequizando.idTurmaAtual);
+		});
 	}
 
 	// adiciona catequizando
@@ -81,22 +83,27 @@ appControllers.controller('catequizandoController', function($scope, $http,
 	}
 
 	// busca registro de catequizandos por nome
-	$scope.buscarRegistro = function(indexPage) {
+	$scope.buscarRegistro = function() {
 		// caso nao seja informado valor campo para pesquisa retorna todos os
 		// registros
 		if ($scope.inputSearch.length == 0) {
-			fetchRegistros();
+			fetchRegistros(0);
+			filtro = false;
 		} else {
-			webService.getCatequizandoNome($scope.inputSearch, indexPage).then(
-					function(value) {
-						$scope.page.loadPage(value)
-						$scope.registros = $scope.page.content;
-					}, function(reason) {
-
-					}, function(value) {
-
-					});
+			fetchRegistrosNome(0);
+			filtro = true;
 		}
+	}
+
+	var fetchRegistrosNome = function(indexPage) {
+		webService.getCatequizandoNome($scope.inputSearch, indexPage).then(function(value) {
+			$scope.page.loadPage(value)
+			$scope.registros = $scope.page.content;
+		}, function(reason) {
+
+		}, function(value) {
+
+		});
 	}
 
 	$scope.formatData = function(data) {
@@ -128,29 +135,27 @@ appControllers.controller('catequizandoController', function($scope, $http,
 
 });
 
-appControllers.controller('turmaController',
-		function($scope, $http, webService) {
+appControllers.controller('turmaController', function($scope, $http, webService) {
 
-			$scope.registros = [];
+	$scope.registros = [];
 
-			var fetchRegistros = function() {
+	var fetchRegistros = function() {
 
-				webService.getTurmaList().then(function(value) {
-					$scope.registros = value;
-				});
-			}
-
-			fetchRegistros();
-
-			$scope.formatData = function(data) {
-				dateFormat = new Date(data);
-				return dateFormat.toLocaleDateString();
-			}
-
+		webService.getTurmaList().then(function(value) {
+			$scope.registros = value;
 		});
+	}
 
-appControllers.controller('turmaListaController', function($scope, $http,
-		$routeParams, webService) {
+	fetchRegistros();
+
+	$scope.formatData = function(data) {
+		dateFormat = new Date(data);
+		return dateFormat.toLocaleDateString();
+	}
+
+});
+
+appControllers.controller('turmaListaController', function($scope, $http, $routeParams, webService) {
 
 	var controller = this;
 	var idTurma = $routeParams.id;

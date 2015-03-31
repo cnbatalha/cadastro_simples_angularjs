@@ -13,46 +13,63 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "catequista")
 public class Catequista {
 
-	
-	@Id
-	private Integer id;
-	private String nome;
-	private Date nascimento;
-	
-	@JsonIgnore
-	@Column(name = "situacao_deletado")
-	private String situacao = "N";
+    @Id
+    private Integer id;
+    private String nome;
+    private Date nascimento;
+    private String email;
+    private String senha;
 
-	public Integer getId() {
-		return id;
-	}
+    @JsonIgnore
+    @Column(name = "situacao_deletado")
+    private String situacao = "N";
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+	return id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getNome() {
+	return nome;
+    }
 
-	public Date getNascimento() {
-		return nascimento;
-	}
+    public void setNome(String nome) {
+	this.nome = nome;
+    }
 
-	public void setNascimento(Date nascimento) {
-		this.nascimento = nascimento;
-	}
+    public Date getNascimento() {
+	return nascimento;
+    }
 
-	public String getSituacao() {
-		return situacao;
-	}
+    public void setNascimento(Date nascimento) {
+	this.nascimento = nascimento;
+    }
 
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
-	}
+    public String getSituacao() {
+	return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+	this.situacao = situacao;
+    }
+
+    public String getSenha() {
+	return senha;
+    }
+
+    public void setSenha(String senha) {
+	this.senha = senha;
+    }
+
+    public String getEmail() {
+	return email;
+    }
+
+    public void setEmail(String email) {
+	this.email = email;
+    }
 
 }

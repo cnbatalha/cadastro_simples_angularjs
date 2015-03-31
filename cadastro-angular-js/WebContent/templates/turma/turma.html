@@ -9,9 +9,7 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4 class="panel-title">
-						Turma : {{turma.nome}} : {{total}}
-					</h4>
+					<h4 class="panel-title">Turma : {{turma.nome}} : {{total}}</h4>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped">
@@ -25,7 +23,7 @@
 							<td><a href="#/catequizando/{{c.id}}">#{{c.id}}</a></td>
 							<td>{{c.nome}}</td>
 							<td>{{formatData(c.nascimento)}}</td>
-							<td>{{}}</td>
+							<td>{{c.telCelular}}/{{c.telFixo}}</td>
 						</tr>
 					</table>
 				</div>

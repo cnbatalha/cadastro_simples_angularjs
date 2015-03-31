@@ -3,7 +3,7 @@ var catequeseServices = angular.module('catequeseServices', []);
 catequeseServices.service('webService', function($http, $location) {
 
 	var service = this;
-	var countRegister = 2;
+	var countRegister = 20;
 
 	var port = $location.port();
 	console.log($location);
@@ -12,33 +12,32 @@ catequeseServices.service('webService', function($http, $location) {
 	console.log(this.host);
 
 	var protocol = $location.protocol();
+	var serviceName = '/cadastro-ajs-server';
 
-	this.urlBase = protocol + '://' + host + ':' + port;
-	// this.urlBase = 'http://sistematic.serveftp.net:8080';
+	// this.urlBase = protocol + '://' + host + ':' + port + serviceName;
+	this.urlBase = 'http://sistematic.serveftp.net:8080' + serviceName;
 	this.turmas = new Array();
+
+	/* *************************************************************** */
+	/* Catequizando */
 
 	/* servico retorna o plano de Producao do Id informado */
 	this.getCatequizandoList = function(pageIndex) {
 
-		return $http.get(
-				this.urlBase + '/cadastro-ajs-server/catequizando/page/'
-						+ pageIndex + '/' + countRegister).then(
-				function(value) {
-					console.log(value.data);
-					return value.data;
-				}, function(reason) {
-					console.log(reason);
-				}, function(value) {
+		return $http.get(this.urlBase + '/catequizando/page/' + pageIndex + '/' + countRegister).then(function(value) {
+			console.log(value.data);
+			return value.data;
+		}, function(reason) {
+			console.log(reason);
+		}, function(value) {
 
-				});
+		});
 
 	};
 
 	this.getCatequizando = function(idCatequizando) {
 
-		return $http.get(
-				this.urlBase + '/cadastro-ajs-server/catequizando/'
-						+ idCatequizando).then(function(value) {
+		return $http.get(this.urlBase + '/catequizando/' + idCatequizando).then(function(value) {
 			console.log(value.data);
 			return value.data;
 		}, function(reason) {
@@ -51,9 +50,7 @@ catequeseServices.service('webService', function($http, $location) {
 
 	this.removeCatequizando = function(idCatequizando) {
 
-		return $http.post(
-				this.urlBase + '/cadastro-ajs-server/catequizando/remove/'
-						+ idCatequizando).then(function(value) {
+		return $http.post(this.urlBase + '/catequizando/remove/' + idCatequizando).then(function(value) {
 			console.log(value.data);
 			return value.data;
 		}, function(reason) {
@@ -66,9 +63,7 @@ catequeseServices.service('webService', function($http, $location) {
 
 	this.getCatequizandoNome = function(nome, index) {
 
-		return $http.get(
-				this.urlBase + '/cadastro-ajs-server/catequizando/nome/' + nome
-						+ '/page/' + index + '/' + countRegister).then(
+		return $http.get(this.urlBase + '/catequizando/nome/' + nome + '/page/' + index + '/' + countRegister).then(
 				function(value) {
 					console.log(value.data);
 					return value.data;
@@ -84,12 +79,11 @@ catequeseServices.service('webService', function($http, $location) {
 
 		var json = angular.toJson(Catequizando);
 
-		return $http.post(this.urlBase + '/cadastro-ajs-server/catequizando',
-				json, {
-					headers : {
-						'Content-Type' : 'application/json; charset=UTF-8'
-					}
-				}).then(function(value) {
+		return $http.post(this.urlBase + '/catequizando', json, {
+			headers : {
+				'Content-Type' : 'application/json; charset=UTF-8'
+			}
+		}).then(function(value) {
 			console.log('then ' + value);
 			return value;
 		}, function(reason) {
@@ -101,28 +95,41 @@ catequeseServices.service('webService', function($http, $location) {
 
 	}
 
+	/* lista aniversariantes do Mes informado */
+	this.aniversarioCatequizando = function(mes) {
+		return $http.get(this.urlBase + '/catequizando/aniversario/' + mes).then(function(value) {
+			console.log(value.data);
+			return value.data;
+		}, function(reason) {
+			console.log(reason);
+		}, function(value) {
+
+		});
+
+	}
+
+	/* ************************************************************************ */
+	/* turma */
+
 	/* servico retorna turmas */
 	this.getTurmaList = function() {
 
-		return $http.get(this.urlBase + '/cadastro-ajs-server/turma').then(
-				function(value) {
-					console.log(value);
-					return value.data;
-				}, function(reason) {
-					console.log(reason);
-					return reason;
-				}, function(value) {
+		return $http.get(this.urlBase + '/turma').then(function(value) {
+			console.log(value);
+			return value.data;
+		}, function(reason) {
+			console.log(reason);
+			return reason;
+		}, function(value) {
 
-				});
+		});
 
 	};
 
 	/* servico retorna turmas */
 	this.getTurmaCatequizandoList = function(idTurma) {
 
-		return $http.get(
-				this.urlBase + '/cadastro-ajs-server/catequizando/turma/'
-						+ idTurma).then(function(value) {
+		return $http.get(this.urlBase + '/catequizando/turma/' + idTurma).then(function(value) {
 			console.log(value);
 			return value.data;
 		}, function(reason) {
@@ -137,16 +144,14 @@ catequeseServices.service('webService', function($http, $location) {
 	/* servico retorna turmas */
 	this.getTurma = function(idTurna) {
 
-		return $http
-				.get(this.urlBase + '/cadastro-ajs-server/turma/' + idTurna)
-				.then(function(value) {
-					console.log(value.data);
-					return value.data;
-				}, function(reason) {
-					console.log(reason);
-				}, function(value) {
+		return $http.get(this.urlBase + '/turma/' + idTurna).then(function(value) {
+			console.log(value.data);
+			return value.data;
+		}, function(reason) {
+			console.log(reason);
+		}, function(value) {
 
-				});
+		});
 
 	};
 
@@ -161,5 +166,30 @@ catequeseServices.service('webService', function($http, $location) {
 	}, function(value) {
 
 	});
+
+	/* ********************************************************************** */
+	/* Catequista */
+	/* ********************************************************************** */
+
+	/* login */
+	this.login = function(login, passwd) {
+
+		var hashLogin = "{login:" + login + " , passwd:" + passwd + "}";
+
+		return $http.post(this.urlBase + '/catequista/login', hashLogin, {
+			headers : {
+				'Content-Type' : 'application/json; charset=UTF-8'
+			}
+		}).then(function(value) {
+			console.log('then ' + value);
+			return value;
+		}, function(reason) {
+			console.log(reason);
+			return reason;
+		}, function(value) {
+			console.log('value - ' + value);
+		});
+
+	}
 
 });

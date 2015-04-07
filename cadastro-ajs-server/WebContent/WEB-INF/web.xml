@@ -4,54 +4,21 @@
 	version="3.0">
 
 	<display-name>Catequese Online - Server</display-name>
+	<!-- session-config> <session-timeout>1</session-timeout> </session-config -->
 
 	<!-- Configuration locations must consist of one or more comma- or space-delimited 
 		fully-qualified @Configuration classes. Fully-qualified packages may also be specified 
 		for component-scanning -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>	
-			/WEB-INF/dispatcher-servlet.xml 
-			/WEB-INF/security-context.xml 
-		</param-value>
-	</context-param>
-
-	<!-- context-param> <param-name>contextConfigLocation</param-name> <param-value>classpath:/repository-config.xml</param-value> 
-		</context-param -->
-
 	<!-- context-param> <param-name>contextClass</param-name> <param-value> org.springframework.web.context.support.AnnotationConfigWebApplicationContext 
 		</param-value> </context-param -->
 
-	<!-- context-param> <param-name>log4jConfigLocation</param-name> <param-value>/WEB-INF/classes/log4j.properties</param-value> 
-		</context-param -->
-
-	<!-- Bootstrap the root application context as usual using ContextLoaderListener -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	<!-- Declare a Spring MVC DispatcherServlet as usual -->
-	<!-- servlet> <servlet-name>dispatcher</servlet-name> <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class -->
-	<!-- load-on-startup>1</load-on-startup -->
-	<!-- servlet> <servlet-mapping> <servlet-name>dispatcher</servlet-name> <url-pattern>/</url-pattern> 
-		</servlet-mapping -->
-
-	<!-- servlet-mapping> <servlet-name>default</servlet-name> <url-pattern>/static/*</url-pattern> 
-		</servlet-mapping -->
-
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-	</welcome-file-list>
-
-	<filter>
-		<filter-name>cors</filter-name>
-		<filter-class>com.cadastro.AccessFilter</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>cors</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>	
+			/WEB-INF/dispatcher-servlet.xml
+			/WEB-INF/security-context.xml 			 
+		</param-value>
+	</context-param>
 
 	<!-- Spring security -->
 	<filter>
@@ -62,5 +29,34 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<!-- context-param> <param-name>contextConfigLocation</param-name> <param-value>classpath:/repository-config.xml</param-value> 
+		</context-param -->
+
+	<!-- Bootstrap the root application context as usual using ContextLoaderListener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<!-- Declare a Spring MVC DispatcherServlet as usual -->
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- load-on-startup>1</load-on-startup -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- servlet-mapping> <servlet-name>default</servlet-name> <url-pattern>/static/*</url-pattern> 
+		</servlet-mapping -->
+
+	<!-- welcome-file-list> <welcome-file>index.html</welcome-file> </welcome-file-list -->
+
+	<!-- filter> <filter-name>cors</filter-name> <filter-class>com.cadastro.AccessFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>cors</filter-name> <url-pattern>/*</url-pattern> 
+		</filter-mapping -->
 
 </web-app>

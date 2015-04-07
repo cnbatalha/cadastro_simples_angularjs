@@ -14,8 +14,8 @@ catequeseServices.service('webService', function($http, $location) {
 	var protocol = $location.protocol();
 	var serviceName = '/cadastro-ajs-server';
 
-	// this.urlBase = protocol + '://' + host + ':' + port + serviceName;
-	this.urlBase = 'http://sistematic.serveftp.net:8080' + serviceName;
+	this.urlBase = protocol + '://' + host + ':' + port + serviceName;
+	//this.urlBase = 'http://sistematic.serveftp.net:8080' + serviceName;
 	this.turmas = new Array();
 
 	/* *************************************************************** */

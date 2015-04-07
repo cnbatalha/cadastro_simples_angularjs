@@ -1,6 +1,13 @@
-angular.module('cadastro', [ 'ngRoute', 'appControllers', 'catequeseServices', 'catequizandoModule' ])
+'use strict';
 
-.config(function($routeProvider) {
+// declare modules
+// angular.module('Authentication', []);
+// angular.module('Home', []);
+
+angular.module(
+		'cadastro',
+		[ 'ngRoute', 'ngCookies', 'appControllers', 'catequeseServices', 'catequizandoModule', 'AuthController',
+				'AuthService' ]).config(function($routeProvider) {
 
 	$routeProvider
 
@@ -8,10 +15,10 @@ angular.module('cadastro', [ 'ngRoute', 'appControllers', 'catequeseServices', '
 	.when('/', {
 		title : "Login",
 		templateUrl : 'templates/login/login.html',
-		controller : 'navigation'
+		controller : 'LoginController'
 	}).when('/login', {
 		templateUrl : 'templates/login/login.html',
-		controller : 'navigation'
+		controller : 'LoginController'
 	}).when('/home', {
 		templateUrl : 'home.html',
 		controller : 'home'
@@ -62,11 +69,11 @@ angular.module('cadastro', [ 'ngRoute', 'appControllers', 'catequeseServices', '
 
 	$scope.auth = false;
 
-	credentials = {};
+	$scope.credentials = {};
 
 	$scope.loginUser = function() {
 
-		webService.login(credentials.username, credentials.password).then(function(value) {
+		webService.login($scope.credentials.username, $scope.credentials.password).then(function(value) {
 			$scope.auth = value;
 			if ($scope.auth) {
 				$location.path('/home');
@@ -98,4 +105,37 @@ angular.module('cadastro', [ 'ngRoute', 'appControllers', 'catequeseServices', '
 	 * }).error(function(data) { $location.path("/login"); $scope.error = true;
 	 * $rootScope.authenticated = false; }) };
 	 */
-});
+}).run([ '$rootScope', '$location', '$cookieStore', '$http', function($rootScope, $location, $cookieStore, $http) {
+	// keep user logged in after page refresh
+	$rootScope.globals = $cookieStore.get('globals') || {};
+	if ($rootScope.globals.currentUser) {
+		$http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint
+		// ignore:line
+	}
+
+	$rootScope.$on('$locationChangeStart', function(event, next, current) {
+		// redirect to login page if not logged in
+		if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+			$location.path('/login');
+		}
+	});
+} ]).factory('authHttpResponseInterceptor', [ '$q', '$location', function($q, $location) {
+	return {
+		response : function(response) {
+			if (response.status === 401) {
+				console.log("Response 401");
+			}
+			return response || $q.when(response);
+		},
+		responseError : function(rejection) {
+			if (rejection.status === 401) {
+				console.log("Response Error 401", rejection);
+				$location.path('/login').search('returnTo', $location.path());
+			}
+			return $q.reject(rejection);
+		}
+	}
+} ]).config([ '$httpProvider', function($httpProvider) {
+	// Http Intercpetor to check auth failures for xhr requests
+	$httpProvider.interceptors.push('authHttpResponseInterceptor');
+} ]);

@@ -3,6 +3,7 @@ package com.cadastro.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import com.google.common.collect.Lists;
 
 @Controller
 @RequestMapping("/turma")
+@Secured("ROLE_ADMIN")
 public class TurmaController {
 
 	@Autowired

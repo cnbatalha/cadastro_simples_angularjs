@@ -5,26 +5,33 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-	<http auto-config='true'>
-		<security:intercept-url pattern="/catequizando/**" access="ROLE_USER, ROLE_ADMIN" />
-		<security:intercept-url pattern="/logviewer.html"
-			access="ROLE_USER, ROLE_ADMIN" />
-		<security:intercept-url pattern="/qr/**" access="ROLE_USER, ROLE_ADMIN" />
-		<!-- security:intercept-url pattern="/sms/**" access="ROLE_USER, ROLE_ADMIN"/ -->
-		<security:intercept-url pattern="/**"
+	<http auto-config="true">
+		<security:intercept-url pattern="/catequizando/**"
+			access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/catequista/**"
+			access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/turma/**" access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/login"
 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
 		<security:http-basic />
 	</http>
+
+	<!-- beans:bean id="restServicesEntryPoint" class="com.cadastro.security.RestAuthenticationEntryPoint" 
+		/ -->
 
 	<!-- beans:bean id="mySuccessHandler" class="com.cadastro.AuthenticationSucessHandler" 
 		/ -->
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
-			<user-service>
-				<user name="temporary" password="temporary" authorities="ROLE_ADMIN" />
-				<user name="user" password="user" authorities="ROLE_USER" />
-			</user-service>
+			<jdbc-user-service data-source-ref="mysqlDataSource"
+				users-by-username-query="SELECT email, senha, ativo FROM usuario WHERE email = ? "
+				authorities-by-username-query="SELECT u.email, p.permissao FROM  usuario u, usuario_permissao p
+								WHERE u.id = p.usuario AND u.email = ? " />
+			<!-- ser-service> <user name="temporary" password="temporary" 
+					authorities="ROLE_ADMIN" /> <user name="user" password="user" authorities="ROLE_USER" 
+					/> </user-service -->
 		</authentication-provider>
 	</authentication-manager>
 

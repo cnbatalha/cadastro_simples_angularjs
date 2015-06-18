@@ -10,7 +10,11 @@
 			access="ROLE_ADMIN" />
 		<security:intercept-url pattern="/catequista/**"
 			access="ROLE_ADMIN" />
-		<security:intercept-url pattern="/turma/**" access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/turma/**" method="GET"
+			access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/turma/**"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" method="OPTIONS" />
+			
 		<security:intercept-url pattern="/login"
 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
@@ -29,9 +33,8 @@
 				users-by-username-query="SELECT email, senha, ativo FROM usuario WHERE email = ? "
 				authorities-by-username-query="SELECT u.email, p.permissao FROM  usuario u, usuario_permissao p
 								WHERE u.id = p.usuario AND u.email = ? " />
-			<!-- ser-service> <user name="temporary" password="temporary" 
-					authorities="ROLE_ADMIN" /> <user name="user" password="user" authorities="ROLE_USER" 
-					/> </user-service -->
+			<!-- ser-service> <user name="temporary" password="temporary" authorities="ROLE_ADMIN" 
+				/> <user name="user" password="user" authorities="ROLE_USER" /> </user-service -->
 		</authentication-provider>
 	</authentication-manager>
 

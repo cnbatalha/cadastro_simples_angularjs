@@ -32,16 +32,8 @@
 		<property name="password" value="q1w2e3" />
 	</bean>
 
-
-	<!-- bean id="catequeseDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
-		<property name="driverClassName" value="com.mysql.jdbc.GoogleDriver" /> <property 
-		name="url" value="jdbc:google:mysql://catequese-online-01:catequese/catequese_db?user=root" 
-		/> </bean -->
-
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-
-
 
 </beans>

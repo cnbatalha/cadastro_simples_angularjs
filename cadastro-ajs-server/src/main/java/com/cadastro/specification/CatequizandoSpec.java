@@ -58,6 +58,7 @@ public class CatequizandoSpec {
 		Expression<Integer> mesAniversario = builder.function("month", Integer.class, birthdate);
 
 		return builder.and(builder.equal(mesAniversario, mes), builder.isNotNull(birthdate));
+		
 	    }
 	};
 

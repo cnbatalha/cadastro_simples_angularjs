@@ -10,7 +10,8 @@ angular.module('AuthService', [])
 				'$cookieStore',
 				'$rootScope',
 				'$timeout',
-				function(Base64, $http, $cookieStore, $rootScope, $timeout) {
+				'$location',
+				function(Base64, $http, $cookieStore, $rootScope, $timeout, $location) {
 					var service = {};
 
 					service.Login = function(username, password, callback) {
@@ -39,8 +40,16 @@ angular.module('AuthService', [])
 						 * authdata, 'Content-Type' : 'application/json;
 						 * charset=UTF-8' } })
 						 */
-
-						$http.post('/cadastro-ajs-server/login',
+						
+						var host = $location.host();
+						var urlBase = '';
+						if (host != 'localhost') {
+							urlBase = 'http://sistematic.serveftp.net:8080'; 
+						} 
+						
+						urlBase = 'http://192.168.0.86:8080';
+						
+						$http.post( urlBase + '/cadastro-ajs-server/login',
 								'{ "login" : "' + username + '", 	"passwd" : "' + password + '" }', {
 									headers : {
 										'Content-Type' : 'application/json;charset=UTF-8'
@@ -64,7 +73,14 @@ angular.module('AuthService', [])
 							}
 						};
 
+						// $httpProvider.defaults.headers.common.Authorization = 'Basic ' + authdata;
 						$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint
+				        //$http.defaults.useXDomain = true;
+				        //$http.defaults.
+				        $http.defaults.headers.common['Content-Type'] = 'application/json';
+				        
+				        //delete $http.defaults.headers.common['X-Requested-With'];
+				        $rootScope.authdata = authdata;
 						$rootScope.auth = true; // ignore:line
 						$cookieStore.put('globals', $rootScope.globals);
 					};

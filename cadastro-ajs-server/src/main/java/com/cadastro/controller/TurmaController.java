@@ -19,19 +19,22 @@ import com.google.common.collect.Lists;
 @Secured("ROLE_ADMIN")
 public class TurmaController {
 
-	@Autowired
-	TurmaRepository turmaRepository;
+    @Autowired
+    TurmaRepository turmaRepository;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody Collection<Turma> getList() {
-		return Lists.newArrayList(turmaRepository.findAll());
-	}
+    // presponse.setHeader("Access-Control-Allow-Credentials", "true");
+    private static final String[] controllerHeader = { "Access-Control-Allow-Origin:*",
+	    "Access-Control-Allow-Methods:POST, GET, OPTIONS, DELETE, HEAD", "Access-Control-Max-Age:3600",
+	    "Access-Control-Allow-Headers:Origin, x-requested-with, Content-Type, Accept, Authorization" };
 
-	@RequestMapping(value = "/{idTurma}", method = RequestMethod.GET)
-	public @ResponseBody Turma getTurma(@PathVariable Integer idTurma) {
-		return turmaRepository.findOne(idTurma);
-	}
-	
-	
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody Collection<Turma> getList() {
+	return Lists.newArrayList(turmaRepository.findAll());
+    }
+
+    @RequestMapping(value = "/{idTurma}", method = RequestMethod.GET)
+    public @ResponseBody Turma getTurma(@PathVariable Integer idTurma) {
+	return turmaRepository.findOne(idTurma);
+    }
 
 }

@@ -1,11 +1,11 @@
 var catequeseServices = angular.module('catequeseServices', []);
 
-catequeseServices.service('webService', function($http, $location) {
+catequeseServices.service('webService', function($http, $location, $rootScope) {
 
 	var service = this;
 	var countRegister = 20;
 
-	var port = $location.port();
+	var port = '8085'; //$location.port();
 	console.log($location);
 
 	var host = $location.host();
@@ -14,8 +14,14 @@ catequeseServices.service('webService', function($http, $location) {
 	var protocol = $location.protocol();
 	var serviceName = '/cadastro-ajs-server';
 
-	this.urlBase = protocol + '://' + host + ':' + port + serviceName;
-	//this.urlBase = 'http://sistematic.serveftp.net:8080' + serviceName;
+	if (host == 'localhost') {
+		this.urlBase = protocol + '://192.168.0.101' + ':' + port + serviceName;
+	} else {
+		this.urlBase = 'http://sistematic.serveftp.net:8080' + serviceName;
+	}
+
+	this.urlBase = protocol + '://192.168.0.101' + ':' + port + serviceName;
+	
 	this.turmas = new Array();
 
 	/* *************************************************************** */
@@ -114,7 +120,11 @@ catequeseServices.service('webService', function($http, $location) {
 	/* servico retorna turmas */
 	this.getTurmaList = function() {
 
-		return $http.get(this.urlBase + '/turma').then(function(value) {
+		return $http.get(this.urlBase + '/turma', {
+			headers : {
+				'Content-Type' : 'application/json; charset=UTF-8'
+			}
+		}).then(function(value) {
 			console.log(value);
 			return value.data;
 		}, function(reason) {

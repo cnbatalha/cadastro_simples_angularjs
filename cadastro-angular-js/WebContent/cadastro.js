@@ -133,7 +133,7 @@ angular.module(
 				$location.path('/login').search('returnTo', $location.path());
 			}
 			return $q.reject(rejection);
-		}
+		} 
 	}
 } ]).config([ '$httpProvider', function($httpProvider) {
 	// Http Intercpetor to check auth failures for xhr requests

@@ -31,16 +31,21 @@ public class LoginController {
 	return (list.size() > 0);
     }
 
-    /*
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public UserLogin teste() {
+    public boolean login() {
+	return true;
+    }
 
-	UserLogin userLogin = new UserLogin();
-	userLogin.setLogin("user");
-	userLogin.setLogin("user");
-
-	return userLogin;
-    }*/
+    /*
+     * @RequestMapping(method = RequestMethod.GET)
+     * 
+     * @ResponseBody public UserLogin teste() {
+     * 
+     * UserLogin userLogin = new UserLogin(); userLogin.setLogin("user");
+     * userLogin.setLogin("user");
+     * 
+     * return userLogin; }
+     */
 
 }

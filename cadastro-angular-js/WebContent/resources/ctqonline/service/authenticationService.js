@@ -42,17 +42,19 @@ angular.module('AuthService', [])
 						 */
 						
 						var host = $location.host();
-						var urlBase = '';
-						if (host != 'localhost') {
+						var urlBase = 'http://localhost:8080';
+						
+						/*if (host != 'localhost') {
 							urlBase = 'http://sistematic.serveftp.net:8080'; 
 						} 
 						
 						urlBase = 'http://192.168.0.86:8080';
+						*/
 						
-						$http.post( urlBase + '/cadastro-ajs-server/login',
-								'{ "login" : "' + username + '", 	"passwd" : "' + password + '" }', {
+						$http.get( urlBase + '/cadastro-ajs-server/login',{
 									headers : {
-										'Content-Type' : 'application/json;charset=UTF-8'
+										'Content-Type' : 'application/json;charset=UTF-8',
+										'Authorization': 'Basic ' + authdata
 									}
 								}).then(function(value) {
 							callback(value);

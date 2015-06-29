@@ -5,25 +5,44 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-	<http auto-config="true">
+
+	<security:http create-session="stateless" entry-point-ref="authenticationEntryPoint">
+
 		<security:intercept-url pattern="/catequizando/**"
 			access="ROLE_ADMIN" />
 		<security:intercept-url pattern="/catequista/**"
 			access="ROLE_ADMIN" />
-		<security:intercept-url pattern="/turma/**" method="GET"
-			access="ROLE_ADMIN" />
-		<security:intercept-url pattern="/turma/**"
-			access="IS_AUTHENTICATED_ANONYMOUSLY" method="OPTIONS" />
-			
+		<security:intercept-url pattern="/turma/**" access="ROLE_ADMIN" />
+
 		<security:intercept-url pattern="/login"
 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-		<security:http-basic />
-	</http>
+		<security:custom-filter ref="basicAuthenticationFilter"
+			after="BASIC_AUTH_FILTER" />
+		<!-- security:custom-filter ref="corsHandler" after="PRE_AUTH_FILTER" / -->
+		<!-- security:port-mappings -->
+
+		<!-- security:http-basic / -->
+	</security:http>
+
+	<beans:bean id="corsHandler" class="com.cadastro.AccessFilter" />
+	
+	
+    <beans:bean id="basicAuthenticationFilter"
+        class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+    </beans:bean>
+
+
+    <beans:bean id="authenticationEntryPoint" 
+        class="com.cadastro.security.PlainTextBasicAuthenticationEntryPoint">
+        <beans:property name="realmName" value="test.com" />
+    </beans:bean> 
+
 
 	<!-- beans:bean id="restServicesEntryPoint" class="com.cadastro.security.RestAuthenticationEntryPoint" 
 		/ -->
-
 	<!-- beans:bean id="mySuccessHandler" class="com.cadastro.AuthenticationSucessHandler" 
 		/ -->
 

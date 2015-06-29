@@ -5,7 +5,7 @@ catequeseServices.service('webService', function($http, $location, $rootScope) {
 	var service = this;
 	var countRegister = 20;
 
-	var port = '8085'; //$location.port();
+	var port = '8080'; //$location.port();
 	console.log($location);
 
 	var host = $location.host();
@@ -14,13 +14,13 @@ catequeseServices.service('webService', function($http, $location, $rootScope) {
 	var protocol = $location.protocol();
 	var serviceName = '/cadastro-ajs-server';
 
-	if (host == 'localhost') {
+	/*if (host == 'localhost') {
 		this.urlBase = protocol + '://192.168.0.101' + ':' + port + serviceName;
 	} else {
 		this.urlBase = 'http://sistematic.serveftp.net:8080' + serviceName;
-	}
+	}*/
 
-	this.urlBase = protocol + '://192.168.0.101' + ':' + port + serviceName;
+	this.urlBase = protocol + '://192.168.0.102' + ':' + port + serviceName;
 	
 	this.turmas = new Array();
 
@@ -122,7 +122,8 @@ catequeseServices.service('webService', function($http, $location, $rootScope) {
 
 		return $http.get(this.urlBase + '/turma', {
 			headers : {
-				'Content-Type' : 'application/json; charset=UTF-8'
+				'Content-Type' : 'application/json; charset=UTF-8',
+				'crossDomain': true
 			}
 		}).then(function(value) {
 			console.log(value);

@@ -20,7 +20,7 @@ catequeseServices.service('webService', function($http, $location, $rootScope) {
 		this.urlBase = 'http://sistematic.serveftp.net:8080' + serviceName;
 	}*/
 
-	this.urlBase = protocol + '://192.168.0.102' + ':' + port + serviceName;
+	this.urlBase = $rootScope.urlBase; // protocol + '://192.168.0.102' + ':' + port + serviceName;
 	
 	this.turmas = new Array();
 

@@ -41,17 +41,10 @@ angular.module('AuthService', [])
 						 * charset=UTF-8' } })
 						 */
 						
-						var host = $location.host();
-						var urlBase = 'http://localhost:8080';
+						//var host = $location.host();
+						//var urlBase = 'http://localhost:8080';						
 						
-						/*if (host != 'localhost') {
-							urlBase = 'http://sistematic.serveftp.net:8080'; 
-						} 
-						
-						urlBase = 'http://192.168.0.86:8080';
-						*/
-						
-						$http.get( urlBase + '/cadastro-ajs-server/login',{
+						$http.get( $rootScope.urlBase + '/login',{
 									headers : {
 										'Content-Type' : 'application/json;charset=UTF-8',
 										'Authorization': 'Basic ' + authdata

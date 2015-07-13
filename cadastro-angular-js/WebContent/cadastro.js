@@ -9,6 +9,7 @@ angular.module(
 		[ 'ngRoute', 'ngCookies', 'appControllers', 'catequeseServices', 'catequizandoModule', 'AuthController',
 				'AuthService' ]).config(function($routeProvider) {
 
+
 	$routeProvider
 
 	/* login */

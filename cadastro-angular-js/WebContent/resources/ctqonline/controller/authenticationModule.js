@@ -5,6 +5,10 @@ angular.module('AuthController', [])
 .controller('LoginController',
 
 function($scope, $rootScope, $location, AuthenticationService) {
+	
+	$rootScope.serviceName = '/cadastro-ajs-server';
+	$rootScope.urlBase = 'http://192.168.0.114:8080' + $rootScope.serviceName;				
+	 
 	// reset login status
 	AuthenticationService.ClearCredentials();
 

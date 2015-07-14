@@ -31,6 +31,7 @@ public class AccessFilter implements Filter {
 	presponse.setHeader("Access-Control-Max-Age", "3600");
 	presponse.setHeader("Access-Control-Allow-Headers",
 		"Origin, x-requested-with, Content-Type, Accept, Authorization");
+	presponse.setHeader("Accept","application/json");
 
 	HttpServletRequest httpRequest = (HttpServletRequest) request;
 	

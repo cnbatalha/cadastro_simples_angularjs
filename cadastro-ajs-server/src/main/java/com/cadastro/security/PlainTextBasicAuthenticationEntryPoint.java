@@ -15,6 +15,7 @@ public class PlainTextBasicAuthenticationEntryPoint extends BasicAuthenticationE
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
 	    throws IOException, ServletException {
+	response.setHeader("Accept","application/json");
 	response.addHeader("Access-Control-Allow-Origin", "*");
 	response.setHeader("Access-Control-Allow-Credentials", "true");
 	response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, HEAD");

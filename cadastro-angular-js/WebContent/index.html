@@ -12,15 +12,16 @@
 <body>
 
 	<div class="container">
-		<nav ng-controller="navigation" ng-show="auth" class="navbar navbar-default">
+		<nav ng-controller="LoginController" ng-show="auth"
+			class="navbar navbar-default">
 			<ul class="nav nav-pills">
-				<li><a href="#/">home</a></li>
+				<li><a href="#/home">Home</a></li>
 				<li ng-show="false"><a href="#/login">login</a></li>
 				<li><a href="#/turmalist">Turma</a></li>
 				<li ng-show="false"><a href="#/catequista">Catequista</a></li>
 				<li><a href="#/aniversario">Aniversariantes</a></li>
 				<li><a href="#/catequizandolist">Catequizando</a></li>
-				<li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
+				<li ng-show="auth"><a href="" ng-click="logout()">Sair</a></li>
 			</ul>
 		</nav>
 
@@ -40,15 +41,20 @@
 
 	<script src="resources/angularjs/angular.min.js"></script>
 	<script src="resources/angularjs/angular-route.min.js"></script>
+	<script src="resources/angularjs/angular-cookies.js"></script>
+
+	<script src="resources/ctqonline/service/WebServices.js"></script>
+	<script src="resources/ctqonline/service/authenticationService.js"></script>
 
 	<script src="resources/ctqonline/controller/appControllers.js"></script>
 	<script src="resources/ctqonline/controller/catequizandoModule.js"></script>
+	<script src="resources/ctqonline/controller/authenticationModule.js"></script>
 	<script src="resources/ctqonline/model/catequizando.js"></script>
 
 	<!-- Util -->
 	<script src="resources/ctqonline/util/paginate.js"></script>
 
-	<script src="resources/ctqonline/service/WebServices.js"></script>
+
 
 	<script src="cadastro.js"></script>
 

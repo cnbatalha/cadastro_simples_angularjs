@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+
+	<security:http create-session="stateless" entry-point-ref="authenticationEntryPoint">
+
+		<security:intercept-url pattern="/catequizando/**"
+			access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/catequista/**"
+			access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/turma/**" access="ROLE_ADMIN" />
+
+		<security:intercept-url pattern="/login"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+		<security:custom-filter ref="basicAuthenticationFilter"
+			after="BASIC_AUTH_FILTER" />
+		<!-- security:custom-filter ref="corsHandler" after="PRE_AUTH_FILTER" / -->
+		<!-- security:port-mappings -->
+
+		<!-- security:http-basic / -->
+	</security:http>
+
+	<beans:bean id="corsHandler" class="com.cadastro.AccessFilter" />
+	
+	
+    <beans:bean id="basicAuthenticationFilter"
+        class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+    </beans:bean>
+
+
+    <beans:bean id="authenticationEntryPoint" 
+        class="com.cadastro.security.PlainTextBasicAuthenticationEntryPoint">
+        <beans:property name="realmName" value="test.com" />
+    </beans:bean> 
+
+
+	<!-- beans:bean id="restServicesEntryPoint" class="com.cadastro.security.RestAuthenticationEntryPoint" 
+		/ -->
+	<!-- beans:bean id="mySuccessHandler" class="com.cadastro.AuthenticationSucessHandler" 
+		/ -->
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="mysqlDataSource"
+				users-by-username-query="SELECT email, senha, ativo FROM usuario WHERE email = ? "
+				authorities-by-username-query="SELECT u.email, p.permissao FROM  usuario u, usuario_permissao p
+								WHERE u.id = p.usuario AND u.email = ? " />
+			<!-- ser-service> <user name="temporary" password="temporary" authorities="ROLE_ADMIN" 
+				/> <user name="user" password="user" authorities="ROLE_USER" /> </user-service -->
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

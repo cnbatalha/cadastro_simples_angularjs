@@ -30,14 +30,15 @@ public class CatequistaController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public boolean login(@RequestBody HashMap<String, String> hashLogin) {
+    @ResponseBody
+    public boolean login(@RequestBody String hashLogin) {
 
-	String login = hashLogin.get("login");
-	String passwd = hashLogin.get("passwd");
+	/*String login = "";// hashLogin.get("login");
+	String passwd = "";// hashLogin.get("passwd");
 
-	List<Catequista> list = catequistaRepository.findAll(CatequistaSpec.login(login, passwd));
+	List<Catequista> list = catequistaRepository.findAll(CatequistaSpec.login(login, passwd));*/
 
-	return (list.size() > 0);
+	return true;
     }
 
     @RequestMapping(value = "/teste", method = RequestMethod.GET)

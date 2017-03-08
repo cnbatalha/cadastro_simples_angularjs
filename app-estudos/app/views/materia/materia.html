@@ -1,1 +1,19 @@
-<h1>MATERIA</h1>
+<h1>{{ titulo }}</h1>
+
+<form ng-submit="addRegistro()" name="frmCadastro" class="form">
+    <input ng-model="titulo"/>
+    <input type="submit" value="OK"/>
+</form>
+
+<br>
+
+<table class="table">
+  <thead>
+    <th> Matéria </th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="m in registros">
+		    <td>{{m.nome}}</td>
+    </tr>
+  </tbody>
+</table>

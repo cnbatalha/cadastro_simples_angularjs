@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'materiaModule'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -26,10 +27,24 @@ angular
       })
       .when('/materia', {
         templateUrl: 'views/materia/materia.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        controller: 'materiaController',
+        controllerAs: 'materia'
       })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+  .run([ '$rootScope', '$location', '$cookieStore', '$http', function($rootScope, $location, $cookieStore, $http) {
+
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBelWXYlwcvlSsPiRUjVq28J-cDNmhLs5A",
+      authDomain: "app-estudos.firebaseapp.com",
+      databaseURL: "https://app-estudos.firebaseio.com",
+      storageBucket: "app-estudos.appspot.com",
+      messagingSenderId: "21739883932"
+    };
+
+    firebase.initializeApp(config);
+
+  }]);

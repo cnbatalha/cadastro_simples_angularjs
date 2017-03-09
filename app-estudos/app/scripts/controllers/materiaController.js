@@ -12,16 +12,23 @@ var materiaModule = angular.module('materiaModule', []);
 
 materiaModule.controller('materiaController', function($scope) {
 
-      $scope.titulo = 'Matéria';
       $scope.registro = {};
+      $scope.registros = [];
+
       var idRegistro = undefined;
 
+      $scope.atualizar = function()
+      {
+          $scope.registro.pesos = ($scope.registro.peso + $scope.registro.conhecimento
+              + $scope.registro.tamanho + $scope.registro.dificuldade ) / 4;
+      };
+
+      // recuperar registros
       var getRegistros = function(){
         var catequizandosRef = firebase.database().ref('materias').orderByChild("nome")
                     .startAt($scope.inputSearch)
                     .endAt($scope.inputSearch + "\uf8ff")
                     .limitToFirst(10);
-
 
         catequizandosRef.once('value', function(data) {
 
@@ -32,19 +39,21 @@ materiaModule.controller('materiaController', function($scope) {
             var childData = data.val();
             childData.key = key;
 
-            lista.push(childData);
+            $scope.registros.push(childData);
             $scope.$apply();
 
           });
 
         });
+     };
 
-    }
-      // adiciona catequista
+     getRegistros();
+
+      // adiciona registro
       $scope.addRegistro = function() {
 
 
-        // cria novo registro de turmas
+        // cria novo registro
         if ( idRegistro == undefined)
         {
           idRegistro  = firebase.database().ref("materias").push().getKey();
@@ -54,8 +63,8 @@ materiaModule.controller('materiaController', function($scope) {
         var updates = {};
         updates['/materias/' + idRegistro ] = $scope.registro;
 
-          // atualiza turmas
-          firebase.database().ref().update(updates);
+        // atualiza turmas
+        firebase.database().ref().update(updates);
 
       };
 

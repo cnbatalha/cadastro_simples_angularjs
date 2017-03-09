@@ -1,8 +1,61 @@
-<h1>{{ titulo }}</h1>
 
 <form ng-submit="addRegistro()" name="frmCadastro" class="form">
-    <input ng-model="titulo"/>
-    <input type="submit" value="OK"/>
+
+  <div class="form-group">
+    <label> Nome </label> <input type="text" class="form-control"
+    ng-model="registro.nome" required="required">
+  </div>
+  <!-- linha 1 -->
+  <div class="row">
+    <div class="col-sm-3 col-md-3">
+      <div class="form-group">
+        <label> Conhecimento </label> <input type="number" ng-change="atualizar()" value="1"
+        class="form-control" ng-model="registro.conhecimento" max="10" min="1" required="required">
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+      <div class="form-group">
+        <label> Tamanho da Matéria </label> <input type="number" ng-change="atualizar()" value="1"
+        class="form-control" ng-model="registro.tamanho" max="10" min="1" required="required">
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+      <div class="form-group">
+        <label> Grau de Dificuldade </label> <input type="number" ng-change="atualizar()" value="1"
+        class="form-control" ng-model="registro.dificuldade" max="10" min="1" required="required">
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+      <div class="form-group">
+        <label> Peso </label> <input type="number" ng-change="atualizar()" value="1"
+        class="form-control" ng-model="registro.peso" max="10" min="1" required="required">
+      </div>
+    </div>
+  </div>
+  <!-- linha 2 -->
+  <div class="row">
+    <div class="col-sm-3 col-md-3">
+      <div class="form-group">
+        <label> Pesos </label> <input type="number"
+        class="form-control" ng-model="registro.pesos" >
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+      <div class="form-group">
+        <label> Percentual de Estudos </label> <input type="number"
+        class="form-control" ng-model="registro.percentual_estudos" >
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+      <div class="form-group">
+        <label> Horas a dedicar </label> <input type="number"
+        class="form-control" ng-model="registro.horas_dedicar" >
+      </div>
+    </div>
+  </div>
+
+  <input type="submit" value="OK"/>
+
 </form>
 
 <br>
@@ -13,7 +66,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="m in registros">
-		    <td>{{m.nome}}</td>
+		    <td>{{m.titulo}}</td>
     </tr>
   </tbody>
 </table>

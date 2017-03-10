@@ -25,12 +25,12 @@ materiaModule.controller('materiaController', function($scope) {
 
       // recuperar registros
       var getRegistros = function(){
-        var catequizandosRef = firebase.database().ref('materias').orderByChild("nome")
+        var materiaRef = firebase.database().ref('materias').orderByChild("nome")
                     .startAt($scope.inputSearch)
                     .endAt($scope.inputSearch + "\uf8ff")
                     .limitToFirst(10);
 
-        catequizandosRef.once('value', function(data) {
+         materiaRef.on('value', function(data) {
 
           data.forEach(function(data) {
                 // key will be "fred" the first time and "barney" the second time
@@ -40,7 +40,7 @@ materiaModule.controller('materiaController', function($scope) {
             childData.key = key;
 
             $scope.registros.push(childData);
-            $scope.$apply();
+            //$scope.$apply();
 
           });
 
@@ -68,4 +68,24 @@ materiaModule.controller('materiaController', function($scope) {
 
       };
 
-  });
+  })
+.controller('flashCardController', function($scope, $http, $routeParams) {
+
+  $scope.registro = {};
+
+  var fetchRegistro = function(id) {
+
+    // conexao firebase 
+    var registroRef = firebase.database().ref('catequizandos/' + id).orderByValue();
+
+    registroRef.on('value', function(data) {
+      $scope.registro = data.val();
+      $scope.$apply();
+    });
+
+  };
+
+  fetchRegistro($routeParams.id);
+
+
+});

@@ -36,13 +36,13 @@
   <div class="row">
     <div class="col-sm-3 col-md-3">
       <div class="form-group">
-        <label> Pesos </label> <input type="number"
+        <label> Pesos </label> <input type="number" step="0.01"
         class="form-control" ng-model="registro.pesos" >
       </div>
     </div>
     <div class="col-sm-3 col-md-3">
       <div class="form-group">
-        <label> Percentual de Estudos </label> <input type="number"
+        <label> Percentual de Estudos </label> <input type="number" step="0.01" min="0"
         class="form-control" ng-model="registro.percentual_estudos" >
       </div>
     </div>
@@ -66,7 +66,8 @@
   </thead>
   <tbody>
     <tr ng-repeat="m in registros">
-		    <td>{{m.titulo}}</td>
+		    <td>{{m.nome}}</td>
+        <td>{{m.pesos}}</td>
     </tr>
   </tbody>
 </table>

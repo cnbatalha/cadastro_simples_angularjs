@@ -10,7 +10,7 @@
 
 var materiaModule = angular.module('materiaModule', []);
 
-materiaModule.controller('materiaController', function($scope) {
+materiaModule.controller('materiaController', function($scope, fbHelper) {
 
       $scope.registro = {};
       $scope.registros = [];
@@ -69,23 +69,57 @@ materiaModule.controller('materiaController', function($scope) {
       };
 
   })
-.controller('flashCardController', function($scope, $http, $routeParams) {
+.controller('flashCardController', function($scope, $http, $routeParams, fbHelper) {
 
   $scope.registro = {};
+  $scope.fCard = {};
+  $scope.id = $routeParams.id;
+
+  $scope.addFCard = function()
+  {
+    var url = "materias/" + $scope.id + "/flashcard/";
+
+    fbHelper.addRegistro(url, $scope.fCard, undefined);
+    /*
+    // cria novo registro
+    //if ( idRegistro == undefined)
+    //{
+
+
+      var idFlashCard  = firebase.database().ref(url).push().getKey();
+      $scope.fCard.key =  idFlashCard ;
+    //}
+
+      var updates = {};
+      updates[url +  idFlashCard ] = $scope.fCard;
+
+      // atualiza
+      firebase.database().ref().update(updates);
+      */
+  };
+
+  var updateRegistro = function(value)
+  {
+    $scope.registro = value;
+  };
 
   var fetchRegistro = function(id) {
 
-    // conexao firebase 
-    var registroRef = firebase.database().ref('catequizandos/' + id).orderByValue();
+    fbHelper.fetchRegistro('materias/' + id, updateRegistro);
+    // conexao firebase
+    /*var registroRef = firebase.database().ref('materias/flshcard/' + $scope.id).orderByValue();
 
     registroRef.on('value', function(data) {
       $scope.registro = data.val();
-      $scope.$apply();
+      //$scope.$apply();
     });
-
+    */
   };
 
   fetchRegistro($routeParams.id);
 
+
+})
+.controller('jogoFCardController', function($scope, $http, $routeParams, fbHelper) {
 
 });

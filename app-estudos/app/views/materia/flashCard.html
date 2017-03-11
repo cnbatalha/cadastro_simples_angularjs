@@ -1,0 +1,90 @@
+<div class="form-group">
+  <label> Nome </label> <input type="text" class="form-control"
+  ng-model="registro.nome" required="required">
+</div>
+<!-- linha 1 -->
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <label> Conhecimento </label> <input type="number" ng-change="atualizar()" value="1"
+      class="form-control" ng-model="registro.conhecimento" max="10" min="1" required="required"
+      readonly="true">
+    </div>
+  </div>
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <label> Tamanho da Matéria </label> <input type="number" ng-change="atualizar()" value="1"
+      class="form-control" ng-model="registro.tamanho" max="10" min="1" required="required"
+      readonly="true">
+    </div>
+  </div>
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <label> Grau de Dificuldade </label> <input type="number" ng-change="atualizar()" value="1"
+      class="form-control" ng-model="registro.dificuldade" max="10" min="1" required="required"
+      readonly="true">
+    </div>
+  </div>
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <label> Peso </label> <input type="number" ng-change="atualizar()" value="1"
+      class="form-control" ng-model="registro.peso" max="10" min="1" required="required"
+      readonly="true">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <label> Pesos </label> <input type="number" step="0.01"
+      class="form-control" ng-model="registro.pesos" readonly="true">
+    </div>
+  </div>
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <label> Percentual de Estudos </label> <input type="number" step="0.01" min="0"
+      class="form-control" ng-model="registro.percentual_estudos" readonly="true">
+    </div>
+  </div>
+  <div class="col-sm-3 col-md-3">
+    <div class="form-group">
+      <label> Horas a dedicar </label> <input type="number"
+      class="form-control" ng-model="registro.horas_dedicar" readonly="true">
+    </div>
+  </div>
+</div>
+
+
+<form ng-submit="addFCard()" name="frmCadastro" class="form">
+  <div class="row">
+    <div class="col-sm-5 col-md-5">
+      <div class="form-group">
+        <label> Pergunta </label>
+        <textarea class="form-control" rows="5" ng-model="fCard.pergunta"/>
+      </div>
+    </div>
+    <div class="col-sm-5 col-md-5">
+      <div class="form-group">
+        <label> Resposta </label>
+        <textarea class="form-control" rows="5" ng-model="fCard.resposta"/>
+      </div>
+    </div>
+  </row>
+  <input type="submit" value="OK"/>
+</form>
+
+<br>
+
+<table class="table">
+  <thead>
+    <th> Pergunta </th>
+    <th> Resposta </th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="m in registros">
+		    <td>{{m.nome}}</td>
+        <td>{{m.pesos}}</td>
+    </tr>
+  </tbody>
+</table>

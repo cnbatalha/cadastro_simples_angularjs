@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'materiaModule'
+    'materiaModule',
+    'FirebaseHelper'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -29,6 +30,16 @@ angular
         templateUrl: 'views/materia/materia.html',
         controller: 'materiaController',
         controllerAs: 'materia'
+      })
+      .when('/flashcard/:id', {
+        templateUrl: 'views/materia/flashCard.html',
+        controller: 'flashCardController',
+        controllerAs: 'fleshCard'
+      })
+      .when('/jogofcard/:id', {
+        templateUrl: 'views/materia/jogoFCard.html',
+        controller: 'jogoFCardController',
+        controllerAs: 'jogoFCard'
       })
       .otherwise({
         redirectTo: '/'

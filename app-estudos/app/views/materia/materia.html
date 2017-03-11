@@ -68,6 +68,8 @@
     <tr ng-repeat="m in registros">
 		    <td>{{m.nome}}</td>
         <td>{{m.pesos}}</td>
+        <td><a href="#!/flashcard/{{m.key}}">flashCard</a></td>
+        <td><a href="#!/jogofcard/{{m.key}}">jogar</a></td>
     </tr>
   </tbody>
 </table>

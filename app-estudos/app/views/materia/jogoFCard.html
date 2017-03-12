@@ -2,32 +2,26 @@
 
   <div class="form-group">
     <label> Nome </label> <input type="text" class="form-control"
-    ng-model="registro.nome" required="required">
+    ng-model="registro.nome" required="required" readonly="true">
   </div>
-
-  <input type="submit" value="OK"/>
-
 </form>
 
 <br>
 
-<div class="card text-center">
-  <div class="card-block">
-    <h4 class="card-title">Special title treatment</h4>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-  </div>
-  <div class="card-footer text-muted">
-    <a href="#" class="btn btn-primary glyphicon glyphicon-ok"></a>
-    <a href="#" class="btn btn-danger glyphicon glyphicon-remove"></a>
-  </div>
-</div>
-
-<div class="panel panel-prymary">
-  <div class="panel-body">
-    Panel content
+<div class="panel panel-primary text-center ">
+  <div class="panel-heading min-height-200">
+    <div ng-show="showPergunta()">
+      <h3 class="panel-title">{{ fCard.pergunta}}</h3>
+    </div>
+    <div ng-show="showResposta()">
+      <h3 class="panel-title">{{ fCard.resposta }}</h3>
+    </div>
   </div>
   <div class="panel-footer">
-    <a href="#" class="btn btn-primary glyphicon glyphicon-ok"></a>
-    <a href="#" class="btn btn-danger glyphicon glyphicon-remove"></a>
+    <a ng-click="acerto()" class="btn btn-primary glyphicon glyphicon-ok"></a>
+    <a ng-click="erro()" class="btn btn-danger glyphicon glyphicon-remove"></a>
+    <a ng-click="virarCard()" class="btn btn-info glyphicon glyphicon-repeat"></a>
+    <a ng-click="proximoCard()" class="btn btn-success glyphicon glyphicon-arrow-right"></a>
+    <p> Aproveitamento: {{ fCard.aproveitamento }} % </p>
   </div>
 </div>

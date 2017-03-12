@@ -71,7 +71,8 @@
       </div>
     </div>
   </row>
-  <input type="submit" value="OK"/>
+  <input type="submit" class="btn btn-primary" value="OK"/>
+  <a class="btn btn-primary" href="#!/jogofcard/{{id}}">Jogar</a>
 </form>
 
 <br>
@@ -80,11 +81,13 @@
   <thead>
     <th> Pergunta </th>
     <th> Resposta </th>
+    <th> Aproveitmento </th>
   </thead>
   <tbody>
-    <tr ng-repeat="m in registros">
-		    <td>{{m.nome}}</td>
-        <td>{{m.pesos}}</td>
+    <tr ng-repeat="m in fCards">
+		    <td>{{m.pergunta}}</td>
+        <td>{{m.resposta}}</td>
+        <td>{{m.aproveitamento}} %</td>
     </tr>
   </tbody>
 </table>

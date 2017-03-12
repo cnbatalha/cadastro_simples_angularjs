@@ -6,8 +6,10 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
 
   var fb = this;
 
+  fb.urls = [];
+
   // recuperar registros
-  fb.getRegistros = function( url, order, lista){
+  fb.getRegistros = function( url, order, updateLista){
 
       var materiaRef = firebase.database().ref(url).orderByChild(order)
                 .startAt($scope.inputSearch)
@@ -15,6 +17,8 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
                 .limitToFirst(20);
 
       materiaRef.on('value', function(data) {
+
+      var lista = [];
 
       data.forEach(function(data) {
             // key will be "fred" the first time and "barney" the second time
@@ -26,6 +30,8 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
             lista.push(childData);
             //$scope.$apply();
       });
+
+      updateLista(lista);
 
     });
   };
@@ -61,5 +67,15 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
 
   };
 
+  // atualizar registro
+  fb.updateRegistro = function(url, idRegistro, registro) {
+
+    var updates = {};
+    updates[url + idRegistro ] = registro;
+
+    // atualiza
+    firebase.database().ref().update(updates);
+
+  };
 
 });

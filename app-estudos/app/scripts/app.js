@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'materiaModule',
+    'notasModule',
     'FirebaseHelper'
   ])
   .config(function ($routeProvider) {
@@ -40,6 +41,11 @@ angular
         templateUrl: 'views/materia/jogoFCard.html',
         controller: 'jogoFCardController',
         controllerAs: 'jogoFCard'
+      })
+      .when('/notas', {
+        templateUrl: 'views/materia/notas.html',
+        controller: 'notasController',
+        controllerAs: 'notas'
       })
       .otherwise({
         redirectTo: '/'

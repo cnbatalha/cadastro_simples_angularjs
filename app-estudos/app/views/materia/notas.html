@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <th> Nome </th>
+    <div>
+      <th> P1 </th>
+      <th> L1 </th>
+      <th> L2 </th>
+      <th> P2 </th>
+      <th> Final </th>
+    <div>
+  </thead>
+  <tbody>
+    <tr ng-repeat="m in registros">
+      <form class="form">
+        <div class="form-group">
+  		    <td>{{m.nome}}</td>
+          <td><input type="number" class="form-control" ng-change="atualizar(m)" ng-model="m.p1"></td>
+          <td><input type="number" class="form-control" ng-change="atualizar(m)" ng-model="m.l1"></td>
+          <td><input type="number" class="form-control" ng-change="atualizar(m)" ng-model="m.l1"></td>
+          <td><input type="number" class="form-control" ng-change="atualizar(m)" ng-model="m.p2"></td>
+          <td><input type="number" class="form-control" ng-change="atualizar(m)" ng-model="m.final"></td>
+          <td><a href="#!/flashcard/{{m.key}}">flashCard</a></td>
+          <td><a href="#!/jogofcard/{{m.key}}">jogar</a></td>
+        </div>
+      </form>
+    </tr>
+  </tbody>
+</table>

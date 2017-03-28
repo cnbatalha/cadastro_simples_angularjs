@@ -1,0 +1,49 @@
+<form ng-submit="addNovo()" name="frmCadastro" class="form">
+  <div class="row">
+    <div class="col-sm-10 col-md-10">
+      <div class="form-group">
+        <label> Aluno </label>
+        <input type="text" class="form-control" required="true" ng-model="nomeAluno">
+      </div>
+    </div>
+    <div class="col-sm-2 col-md-2">
+      <input class="btn btn-default" type="submit" value="OK"/>
+    </div>
+  </div>
+</form>
+<table class="table">
+  <thead>
+    <th> Nome </th>
+    <div>
+      <th> P1 </th>
+      <th> L1 </th>
+      <th> L2 </th>
+      <th> P2 </th>
+      <th> Final </th>
+    <div>
+  </thead>
+  <tbody>
+    <tr ng-repeat="m in getRegistros()">
+      <form class="form">
+        <div class="form-group">
+  		    <td>{{m.nome}}</td>
+          <td><input type="number" class="form-control" max="8" min="1"
+              ng-change="atualizar(m)" ng-model="m.p1"></td>
+          <td><input type="number" class="form-control" max="1" min="1"
+              ng-change="atualizar(m)" ng-model="m.l1"></td>
+          <td><input type="number" class="form-control" max="1" min="1"
+              ng-change="atualizar(m)" ng-model="m.l2"></td>
+          <td><input type="number" class="form-control" max="10" min="1"
+              ng-change="atualizar(m)" ng-model="m.p2"></td>
+          <td><input type="number" class="form-control" ng-change="atualizar(m)"
+              ng-model="m.final" readonly="true"></td>
+          <td><a href="#!/flashcard/{{m.key}}">flashCard</a></td>
+          <td><a href="#!/jogofcard/{{m.key}}">jogar</a></td>
+        </div>
+      </form>
+    </tr>
+  </tbody>
+  <tfoot>
+
+  </tfoot>
+</table>

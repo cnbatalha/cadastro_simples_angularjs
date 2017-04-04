@@ -12,8 +12,8 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
   fb.getRegistros = function( url, order, updateLista){
 
       var materiaRef = firebase.database().ref(url).orderByChild(order)
-                .startAt($scope.inputSearch)
-                .endAt($scope.inputSearch + "\uf8ff")
+                //.startAt($scope.inputSearch)
+                //.endAt($scope.inputSearch + "\uf8ff")
                 .limitToFirst(20);
 
       materiaRef.on('value', function(data) {

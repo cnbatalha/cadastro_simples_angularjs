@@ -18,13 +18,15 @@ angular
     'ngTouch',
     'materiaModule',
     'notasModule',
-    'FirebaseHelper'
+    'mainModule',
+    'FirebaseHelper',
+    'chart.js'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
+        controller: 'mainController',
         controllerAs: 'main'
       })
       .when('/materia', {

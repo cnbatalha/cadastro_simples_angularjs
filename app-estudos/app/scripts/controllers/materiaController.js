@@ -77,18 +77,75 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
   $scope.registro = {};
   $scope.fCard = {};
   $scope.fCards = [];
+
+  $scope.chtBarras = {};
+
+  // aproveitamento
+  $scope.aprv = {};
+  // horas de estudos
+  $scope.hr = {};
+
   $scope.id = $routeParams.id;
 
-  $scope.addFCard = function()
-  {
+  $scope.addFCard = function()  {
+
     var url = "materias/" + $scope.id + "/flashcard/";
 
     fbHelper.addRegistro(url, $scope.fCard, undefined);
 
   };
 
-  var updateRegistro = function(value)
-  {
+  $scope.chartBarras = function(lista){
+
+    $scope.chtBarras.labels = [];
+    $scope.chtBarras.data = [];
+    $scope.chtBarras.options = {};
+
+    // Configuracoes
+    var xAxes = {};
+    xAxes.ticks = {};
+    xAxes.ticks.min = 1;
+    xAxes.ticks.max = 100;
+    xAxes.ticks.fixedStepSize = 10;
+
+    var yAxes = {};
+    yAxes.ticks = {};
+    yAxes.ticks.beginAtZero = true;
+
+    $scope.chtBarras.options.scales = {};
+    $scope.chtBarras.options.scales.xAxes = [];
+    $scope.chtBarras.options.scales.xAxes.push(xAxes);
+    $scope.chtBarras.options.scales.yAxes = [];
+    $scope.chtBarras.options.scales.yAxes.push(yAxes);
+
+    $scope.chtBarras.series = ["Acertos"];
+    $scope.chtBarras.options.responsive = true;
+    // $scope.chtBarras.colors = ['#46BFBD', '#FDB45C', '#DCDCDC'];
+
+    for (var data in lista) {
+
+      var total = 0;
+      var acertos = 0;
+
+      $scope.chtBarras.labels.push(data);
+
+      for (var apv in lista[data]) {
+
+        total += lista[data][apv].total;
+        acertos += lista[data][apv].acertos;
+        //$scope.chtBarras.data.push(
+        //    Math.round( (lista[data][apv].acertos/lista[data][apv].total)*100 )
+        //   );
+      }
+
+      $scope.chtBarras.data.push(Math.round( (acertos/total)*100 ));
+    }
+
+    // $scope.$apply();
+  }
+
+  var updateRegistro = function(value)  {
+
     $scope.registro = value;
 
     $scope.fCards = [];
@@ -97,6 +154,8 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
     for (x in $scope.registro.flashcard) {
         $scope.fCards.push($scope.registro.flashcard[x]);
     }
+
+    // chartBarras(value.aproveitamento);
 
   };
 
@@ -107,6 +166,44 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
   };
 
   fetchRegistro($routeParams.id);
+
+  $scope.registrarAproveitamento = function() {
+    var date = new Date();
+    var dateFormated = getDateFormated(date);
+
+    var url = "materias/" + $scope.id + "/aproveitamento/" + dateFormated + "/";
+    fbHelper.addRegistro(url, $scope.aprv, undefined);
+
+  }
+
+  var getDateFormated = function(date) {
+    var mm = date.getMonth() + 1; // getMonth() is zero-based
+    var dd = date.getDate();
+
+    return [date.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+           ].join('');
+  }
+
+  $scope.registrarHrEstudo = function()
+  {
+    var date = new Date();
+    var dateFormated = getDateFormated(date);
+
+    $scope.hr.date = date;
+
+    var url = "materias/" + $scope.id + "/horas/" + dateFormated + "/";
+    fbHelper.addRegistro(url, $scope.hr, undefined);
+
+    $scope.hr.materia = $scope.registro.nome;
+    $scope.hr.materiakey = $scope.registro.key;
+
+    var urlHOras = "horas/" + dateFormated + "/";
+    fbHelper.addRegistro(urlHOras, $scope.hr, undefined);
+
+    $scope.hr = {};
+  }
 
 
 })

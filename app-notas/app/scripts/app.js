@@ -18,13 +18,14 @@ angular
     'ngTouch',
     'FirebaseHelper',
     'notasModule',
-    'turmaModule'
+    'turmaModule',
+    'chart.js'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
+        controller: 'mainController',
         controllerAs: 'main'
       })
       .when('/turmas', {
@@ -40,7 +41,7 @@ angular
       .when('/notas/:turmakey', {
         templateUrl: 'views/notas/notas.html',
         controller: 'notasController',
-        controllerAs: 'notas'
+        controllerAs: 'vm'
       })
       .otherwise({
         redirectTo: '/'

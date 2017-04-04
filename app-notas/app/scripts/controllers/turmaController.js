@@ -26,6 +26,11 @@ turmaModule.controller('turmaController', function($scope, fbHelper) {
   {
     var registro = {};
     registro.nome = $scope.nomeTurma;
+    registro.bimestres = {};
+    registro.bimestres["bm1"] = {id:"bm1",nome:"BIMESTRE-1"};
+    registro.bimestres["bm2"] = {id:"bm2",nome:"BIMESTRE-2"};
+    registro.bimestres["bm3"] = {id:"bm3",nome:"BIMESTRE-3"};
+    registro.bimestres["bm4"] = {id:"bm4",nome:"BIMESTRE-4"};
 
     $scope.registros = [];
     fbHelper.addRegistro('turmas/', registro, undefined);

@@ -25,7 +25,10 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
             var key = data.key;
             // childData will be the actual contents of the child
             var childData = data.val();
-            childData.key = key;
+            if ( childData.key === undefined)
+            {
+              childData.key = key;
+            }
 
             lista.push(childData);
             //$scope.$apply();
@@ -61,12 +64,21 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
     }
 
     var updates = {};
+
+    // registro = angular.toJson(registro);
+
     updates[url + idRegistro ] = registro;
 
     // atualiza turmas
     firebase.database().ref().update(updates);
 
   };
+
+  // gera key
+  fb.getKey = function(url)
+  {
+    return firebase.database().ref(url).push().getKey();
+  }
 
   // atualizar registro
   fb.updateRegistro = function(url, idRegistro, registro) {

@@ -11,11 +11,18 @@
     </div>
   </div>
 </form>
+
+<ul class="nav nav-tabs">
+  <li ng-repeat="m in vm.registros"><a data-toggle="tab" href="##{{m.id}}" ng-click="processarChar(m.notas)" target="_self">{{m.nome}}</a></li>
+</ul>
+
+<div class="tab-content" >
+<div ng-repeat="b in vm.registros" id="{{b.id}}" class="tab-pane fade">
 <table class="table">
   <thead>
     <th> Nome </th>
     <div>
-      <th> P1 </th>
+      <th col-xs-12> P1 </th>
       <th> L1 </th>
       <th> L2 </th>
       <th> P2 </th>
@@ -23,22 +30,20 @@
     <div>
   </thead>
   <tbody>
-    <tr ng-repeat="m in getRegistros()">
+    <tr ng-repeat="m in b.notas">
       <form class="form">
         <div class="form-group">
   		    <td>{{m.nome}}</td>
-          <td><input type="number" class="form-control" max="8" min="1"
-              ng-change="atualizar(m)" ng-model="m.p1"></td>
-          <td><input type="number" class="form-control" max="1" min="1"
-              ng-change="atualizar(m)" ng-model="m.l1"></td>
-          <td><input type="number" class="form-control" max="1" min="1"
-              ng-change="atualizar(m)" ng-model="m.l2"></td>
-          <td><input type="number" class="form-control" max="10" min="1"
-              ng-change="atualizar(m)" ng-model="m.p2"></td>
+          <td><input type="number" class="form-control" max="8" min="0" value="0" step="0.01"
+              ng-change="atualizar(b.id, m)" ng-model="m.p1"></td>
+          <td><input type="number" class="form-control" max="1" min="0" value="0" step="0.01"
+              ng-change="atualizar(b.id, m)" ng-model="m.l1"></td>
+          <td><input type="number" class="form-control" max="1" min="0" value="0" step="0.01"
+              ng-change="atualizar(b.id, m)" ng-model="m.l2"></td>
+          <td><input type="number" class="form-control" max="10" min="0" value="0" step="0.01"
+              ng-change="atualizar(b.id, m)" ng-model="m.p2"></td>
           <td><input type="number" class="form-control" ng-change="atualizar(m)"
               ng-model="m.final" readonly="true"></td>
-          <td><a href="#!/flashcard/{{m.key}}">flashCard</a></td>
-          <td><a href="#!/jogofcard/{{m.key}}">jogar</a></td>
         </div>
       </form>
     </tr>
@@ -47,3 +52,19 @@
 
   </tfoot>
 </table>
+
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+<canvas id="pie" class="chart chart-pie"
+  chart-data="chart.data" chart-labels="chart.labels" chart-options="chart.options" chart-colors="chart.colors">
+</canvas>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+<canvas id="pie" class="chart chart-bar"
+  chart-data="chtBarras.data" chart-labels="chtBarras.labels" chart-options="chtBarras.options" chart-series="chtBarras.series"
+  chart-colors="chtBarras.colors">
+</canvas>
+</div>
+
+</div>
+</div>

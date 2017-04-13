@@ -12,64 +12,149 @@
 
 mainModule.controller('mainController', function($scope, $http, $routeParams, fbHelper) {
 
+    var vm = this;
+
     var url = 'horas/'
     var registros = {};
+    var listaBarras = [];
+    var listaSemana = [];
+    var totalSemana = 0;
 
     $scope.chtBarras = {};
+    $scope.chtPizza = {};
+    $scope.chtSemana = new ChartHelper().init();
 
+    vm.chtPzData = {};
+    $scope.chtPzLabel = {};
+
+    var processaChartSemanal = function(materia, minutos)
+    {
+      if ( listaSemana[materia] == undefined){
+        listaSemana[materia] = {};
+        listaSemana[materia].total = 0;
+        listaSemana[materia].materia = materia;
+      }
+
+      listaSemana[materia].total += minutos;
+      totalSemana += minutos;
+    }
+
+    var chartSemana = function(){
+
+      for (var data in listaSemana) {
+        $scope.chtSemana.labels.push(data);
+        var perc =  Math.round( (listaSemana[data].total/totalSemana)*100);
+        $scope.chtSemana.data.push(perc);
+      }
+
+    }
+
+    // gerar grafico de barras
     var chartBarras = function(lista){
 
-      $scope.chtBarras.labels = [];
-      $scope.chtBarras.data = [];
-      $scope.chtBarras.options = {};
+      // criando objeto de inicializacao
+      var chartHelper = new ChartHelper();
+      $scope.chtBarras = chartHelper.initBar();
 
-      // Configuracoes
-      var xAxes = {};
-      xAxes.ticks = {};
-      xAxes.ticks.min = 1;
-      xAxes.ticks.max = 100;
-      xAxes.ticks.fixedStepSize = 10;
+      var totais = []
+      for (var data in lista) {
 
-      var yAxes = {};
-      yAxes.ticks = {};
-      yAxes.ticks.beginAtZero = true;
+        // adicionando label
+        $scope.chtBarras.labels.push(lista[data].key);
+        var total = 0;
+        listaBarras[lista[data].key] = [];
 
-      $scope.chtBarras.options.scales = {};
-      $scope.chtBarras.options.scales.xAxes = [];
-      $scope.chtBarras.options.scales.xAxes.push(xAxes);
-      $scope.chtBarras.options.scales.yAxes = [];
-      $scope.chtBarras.options.scales.yAxes.push(yAxes);
+        for (var apv in lista[data]) {
 
-      $scope.chtBarras.series = ["Acertos"];
-      $scope.chtBarras.options.responsive = true;
-      // $scope.chtBarras.colors = ['#46BFBD', '#FDB45C', '#DCDCDC'];
+          var sessao = {};
+          if ( lista[data][apv].minutos !== undefined ) {
+            total += lista[data][apv].minutos;
+            // adicionando sessao
+            sessao.minutos = lista[data][apv].minutos;
+            sessao.materia = lista[data][apv].materia;
+            listaBarras[lista[data].key].push(sessao);
+            // chart semanal
+            processaChartSemanal(lista[data][apv].materia, lista[data][apv].minutos);
+          }
+        }
+
+        totais.push(total);
+      }
+
+      $scope.chtBarras.data = totais;
+
+      // atualiza chart
+      // $scope.$apply();
+    }
+
+    // gera grafico diario
+    var chartPizza = function(lista){
+
+      // criando objeto de inicializacao
+      $scope.chtPizza = new ChartHelper().initBar();
 
       for (var data in lista) {
 
         var total = 0;
+        var totais = [];
 
-        $scope.chtBarras.labels.push(lista[data].key);
+        $scope.chtPizza.labels.push(lista[data].key);
 
         for (var apv in lista[data]) {
 
           if ( lista[data][apv].minutos !== undefined ) {
             total += lista[data][apv].minutos;
+            //totais.push(lista[data][apv].minutos);
           }
 
         }
-
         // $scope.chtBarras.data.push(Math.round((total/60)*100)/100);
-        $scope.chtBarras.data.push(total);
+        // totais.push(total);
+        $scope.chtPizza.data.push(total);
       }
+
+      //vm.chtPzData = totais;
     }
 
+    // atualizando lista
     var updateLista = function(lista)
     {
       registros = lista;
 
       chartBarras(registros);
+      chartSemana();
+      //chartPizza(registros);
+
+      $scope.$apply();
     }
 
-    fbHelper.getRegistros(url, 'nome', updateLista);
+    // carregando lista de aproveitamento
+    fbHelper.getRegistros(url, 'nome', updateLista, 7);
+
+    // evento ao clicar nas barras
+    $scope.onClickBarras = function(points, evt){
+        console.log(points, evt);
+
+        var lb = points[0]._model.label;
+        // var lista = registros;
+        vm.chtPzData = [];
+        $scope.chtPzLabel = [];
+        // var totais = [];
+
+        for (var apv in listaBarras[lb] ) {
+
+          if ( listaBarras[lb][apv].minutos !== undefined ) {
+            $scope.chtPizza.labels.push(listaBarras[lb][apv].materia);
+            $scope.chtPizza.data.push(listaBarras[lb][apv].minutos);
+          }
+
+        }
+
+        $scope.$apply();
+    }
+
+    //$scope.$on('chart-create', function (evt, chart) {
+    //  console.log(chart);
+    //});
 
   });

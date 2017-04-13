@@ -19,6 +19,7 @@ angular
     'materiaModule',
     'notasModule',
     'mainModule',
+    'agendaModule',
     'FirebaseHelper',
     'chart.js'
   ])
@@ -47,6 +48,11 @@ angular
       .when('/notas', {
         templateUrl: 'views/materia/notas.html',
         controller: 'notasController',
+        controllerAs: 'notas'
+      })
+      .when('/agenda', {
+        templateUrl: 'views/materia/agenda.html',
+        controller: 'agendaController',
         controllerAs: 'notas'
       })
       .otherwise({

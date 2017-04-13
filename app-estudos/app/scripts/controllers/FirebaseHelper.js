@@ -9,12 +9,17 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
   fb.urls = [];
 
   // recuperar registros
-  fb.getRegistros = function( url, order, updateLista){
+  fb.getRegistros = function( url, order, updateLista, limit){
+
+      if (limit == undefined){
+        limit = 20;
+      }
 
       var materiaRef = firebase.database().ref(url).orderByChild(order)
                 //.startAt($scope.inputSearch)
                 //.endAt($scope.inputSearch + "\uf8ff")
-                .limitToFirst(20);
+                //.limitToFirst(limit);
+                .limitToLast(limit);
 
       materiaRef.on('value', function(data) {
 

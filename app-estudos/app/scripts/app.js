@@ -45,9 +45,9 @@ angular
         controller: 'jogoFCardController',
         controllerAs: 'jogoFCard'
       })
-      .when('/notas', {
-        templateUrl: 'views/materia/notas.html',
-        controller: 'notasController',
+      .when('/materias', {
+        templateUrl: 'views/materia/materia.html',
+        controller: 'materiaViewController',
         controllerAs: 'notas'
       })
       .when('/agenda', {

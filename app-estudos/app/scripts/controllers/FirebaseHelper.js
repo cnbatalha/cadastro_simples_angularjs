@@ -9,17 +9,20 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
   fb.urls = [];
 
   // recuperar registros
-  fb.getRegistros = function( url, order, updateLista, limit){
+  fb.getRegistros = function( url, order, updateLista, limit, key){
 
       if (limit == undefined){
         limit = 20;
       }
 
-      var materiaRef = firebase.database().ref(url).orderByChild(order)
-                //.startAt($scope.inputSearch)
-                //.endAt($scope.inputSearch + "\uf8ff")
-                //.limitToFirst(limit);
-                .limitToLast(limit);
+      if (order == undefined){
+        var materiaRef = firebase.database().ref(url)
+                  .limitToLast(limit);
+      }
+      else {
+        var materiaRef = firebase.database().ref(url).orderByChild(order)
+                  .limitToLast(limit);
+      }
 
       materiaRef.on('value', function(data) {
 
@@ -36,7 +39,7 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
             //$scope.$apply();
       });
 
-      updateLista(lista);
+      updateLista(lista, key);
 
     });
   };
@@ -72,11 +75,28 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
 
   };
 
+  // gera key
+  fb.getKey = function(url)
+  {
+    return firebase.database().ref(url).push().getKey();
+  }
+
   // atualizar registro
   fb.updateRegistro = function(url, idRegistro, registro) {
 
     var updates = {};
     updates[url + idRegistro ] = registro;
+
+    // atualiza
+    firebase.database().ref().update(updates);
+
+  };
+
+  // atualizar registro
+  fb.updateRegistros = function(updates) {
+
+    //var updates = {};
+    //updates[url + idRegistro ] = registro;
 
     // atualiza
     firebase.database().ref().update(updates);

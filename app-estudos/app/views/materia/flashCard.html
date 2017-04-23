@@ -59,106 +59,36 @@
   <li><a data-toggle="tab" ng-click="chartBarras(registro.aproveitamento)" href="##aprovtMateria" target="_self">Aproveitamento</a></li>
   <li><a data-toggle="tab" href="##horasEstudo" target="_self">Horas de Estudo</a></li>
   <li><a data-toggle="tab" href="##flashCard" target="_self">FlashCard</a></li>
+  <li><a data-toggle="tab" href="##topicos" target="_self">Topicos</a></li>
 </ul>
 
 <div class="tab-content" >
 
   <!-- APROVEITAMENTO -->
   <div id="aprovtMateria" class="tab-pane fade">
-    <br>
-    <div class="row">
-    <form ng-submit="registrarAproveitamento()" name="frmCadastro" class="form">
-        <div class="col-sm-3 col-md-3">
-          <div class="form-group">
-            <label> Acertos </label>
-            <input class="form-control" ng-model="aprv.acertos" value="0" type="number"> </input>
-          </div>
-        </div>
-        <div class="col-sm-3 col-md-3">
-          <div class="form-group">
-            <label> Erros </label>
-            <input class="form-control" ng-model="aprv.erros" value="0" type="number"> </input>
-          </div>
-        </div>
-        <div class="col-sm-3 col-md-3">
-          <div class="form-group">
-            <label> Total </label>
-            <input class="form-control" ng-model="aprv.total" value="0" type="number"> </input>
-          </div>
-        </div>
-      <input type="submit" class="btn btn-primary" value="OK"/>
-    </form>
-    </div>
-
-    <div class="row">
-    <canvas id="pie" class="chart chart-bar"
-      chart-data="chtBarras.data" chart-labels="chtBarras.labels" chart-options="chtBarras.options" chart-series="chtBarras.series"
-      chart-colors="chtBarras.colors">
-    </canvas>
+    <div class="panel-body">
+      <div ng-include="'views/materia/aproveitamento.html'"> </div>
     </div>
   </div>
 
   <!-- HORAS ESTUDO -->
   <div id="horasEstudo" class="tab-pane fade">
-    <br>
-    <div class="row">
-    <form ng-submit="registrarHrEstudo()" name="frmCadastro" class="form">
-        <div class="col-sm-3 col-md-3">
-          <div class="form-group">
-            <label> Período (minutos) </label>
-            <input class="form-control" ng-model="hr.minutos" value="0" type="number"> </input>
-          </div>
-        </div>
-        <input type="submit" class="btn btn-primary" value="OK"/>
-    </form>
-    </div>
-
-    <div class="row">
-    <canvas id="pie" class="chart chart-bar"
-      chart-data="chtBarras.data" chart-labels="chtBarras.labels" chart-options="chtBarras.options" chart-series="chtBarras.series"
-      chart-colors="chtBarras.colors">
-    </canvas>
+    <div class="panel-body">
+      <div ng-include="'views/materia/horasEstudo.html'"> </div>
     </div>
   </div>
 
-
   <!-- FLASH  CARD-->
   <div id="flashCard" class="tab-pane fade">
-    <form ng-submit="addFCard()" name="frmCadastro" class="form">
-      <div class="row">
-        <div class="col-sm-5 col-md-5">
-          <div class="form-group">
-            <label> Pergunta </label>
-            <textarea class="form-control" rows="5" ng-model="fCard.pergunta"> </textarea>
-          </div>
-        </div>
-        <div class="col-sm-5 col-md-5">
-          <div class="form-group">
-            <label> Resposta </label>
-            <textarea class="form-control" rows="5" ng-model="fCard.resposta"> </textarea>
-          </div>
-        </div>
-      </row>
-      <input type="submit" class="btn btn-primary" value="OK"/>
-      <a class="btn btn-primary" href="#!/jogofcard/{{id}}">Jogar</a>
-    </form>
+    <div class="panel-body">
+      <div ng-include="'views/materia/flashCardAdd.html'"> </div>
+    </div>
+  </div>
 
-    <br>
-
-    <table class="table">
-      <thead>
-        <th> Pergunta </th>
-        <th> Resposta </th>
-        <th> Aproveitmento </th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="m in fCards">
-    		    <td>{{m.pergunta}}</td>
-            <td>{{m.resposta}}</td>
-            <td>{{m.aproveitamento}} %</td>
-        </tr>
-      </tbody>
-    </table>
+  <div id="topicos" class="tab-pane fade">
+    <div class="panel-body">
+      <div ng-include="'views/materia/topicosMateria.html'"> </div>
+    </div>
   </div>
 
 </div>

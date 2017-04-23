@@ -1,0 +1,37 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+        <h3 class="panel-title">Tópico</h3>
+  </div>
+  <div class="panel-body">
+    <form ng-submit="registrarTopico()" name="frmCadastro" class="form-inline">
+      <div class="form-group">
+        <label> Nome </label> <input type="text" class="form-control"
+        ng-model="topico.nome" required="required">
+      </div>
+      <input type="submit" class="btn btn-primary" value="OK"/>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+        <h3 class="panel-title">Tópicos</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <th> Nome </th>
+        <th> Aproveitamento </th>
+        <th> Horas </th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="m in topicoList">
+            <td>{{m.nome}}</td>
+            <td>{{m.aproveitamento}}</td>
+            <td>{{m.horas}}</td>            
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

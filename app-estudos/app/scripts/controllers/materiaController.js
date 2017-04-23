@@ -28,7 +28,7 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
         var materiaRef = firebase.database().ref('materias').orderByChild("nome")
                     .startAt($scope.inputSearch)
                     .endAt($scope.inputSearch + "\uf8ff")
-                    .limitToFirst(10);
+                    .limitToFirst(20);
 
          var lista = [];
 
@@ -72,70 +72,83 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
       };
 
   })
+.controller('materiaViewController', function($scope, $http, $routeParams, fbHelper) {
+
+  // id materia
+  $scope.id = $routeParams.id;
+
+
+})
 .controller('flashCardController', function($scope, $http, $routeParams, fbHelper) {
 
+  // id materia
+  $scope.id = $routeParams.id;
+
+  $scope.orderList = 'nome';
   $scope.registro = {};
+
+  //  query grid
+  $scope.query = "";
+  $scope.showGrid = false;
+
+  // flash cards
   $scope.fCard = {};
   $scope.fCards = [];
 
-  $scope.chtBarras = {};
+  // topicos
+  $scope.topico = {};
+  $scope.topicoList = [];
+  $scope.topicosSelecionados = [];
+  $scope.topicosSelecionadosHr = [];
+  var urlTopicos = 'topicos/' + $scope.id + '/';
+
+  // evento selecionar topico
+  $scope.selecionarTopico = function(t){
+    t.acertos = 0;
+    t.erros = 0;
+    $scope.topicosSelecionados.push(t);
+  }
+  // event para selecionar topico hora
+  $scope.selecionarTopicoHr = function(t){
+    t.hr = 0;
+    $scope.topicosSelecionadosHr.push(t);
+  }
+
+  $scope.ativarGrid = function(value){
+    $scope.showGrid = ( value !== "" );
+  }
+
+  // grafico
+  $scope.chtBarras = new ChartHelper().initBar();
 
   // aproveitamento
   $scope.aprv = {};
   // horas de estudos
   $scope.hr = {};
 
-  $scope.id = $routeParams.id;
-
+  // add flashcard
   $scope.addFCard = function()  {
-
     var url = "materias/" + $scope.id + "/flashcard/";
-
     fbHelper.addRegistro(url, $scope.fCard, undefined);
-
   };
 
+  // gerando grafico de barras
   $scope.chartBarras = function(lista){
 
     $scope.chtBarras.labels = [];
     $scope.chtBarras.data = [];
-    $scope.chtBarras.options = {};
-
-    // Configuracoes
-    var xAxes = {};
-    xAxes.ticks = {};
-    xAxes.ticks.min = 1;
-    xAxes.ticks.max = 100;
-    xAxes.ticks.fixedStepSize = 10;
-
-    var yAxes = {};
-    yAxes.ticks = {};
-    yAxes.ticks.beginAtZero = true;
-
-    $scope.chtBarras.options.scales = {};
-    $scope.chtBarras.options.scales.xAxes = [];
-    $scope.chtBarras.options.scales.xAxes.push(xAxes);
-    $scope.chtBarras.options.scales.yAxes = [];
-    $scope.chtBarras.options.scales.yAxes.push(yAxes);
 
     $scope.chtBarras.series = ["Acertos"];
-    $scope.chtBarras.options.responsive = true;
-    // $scope.chtBarras.colors = ['#46BFBD', '#FDB45C', '#DCDCDC'];
 
     for (var data in lista) {
-
       var total = 0;
       var acertos = 0;
 
       $scope.chtBarras.labels.push(data);
 
       for (var apv in lista[data]) {
-
         total += lista[data][apv].total;
         acertos += lista[data][apv].acertos;
-        //$scope.chtBarras.data.push(
-        //    Math.round( (lista[data][apv].acertos/lista[data][apv].total)*100 )
-        //   );
       }
 
       $scope.chtBarras.data.push(Math.round( (acertos/total)*100 ));
@@ -144,10 +157,9 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
     // $scope.$apply();
   }
 
+  // atualiza registros
   var updateRegistro = function(value)  {
-
     $scope.registro = value;
-
     $scope.fCards = [];
 
     var x;
@@ -156,17 +168,15 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
     }
 
     // chartBarras(value.aproveitamento);
-
   };
 
+  // carregando materia
   var fetchRegistro = function(id) {
-
     fbHelper.fetchRegistro('materias/' + id, updateRegistro);
-
   };
-
   fetchRegistro($routeParams.id);
 
+  // registra aproveitamento
   $scope.registrarAproveitamento = function() {
     var date = new Date();
     var dateFormated = getDateFormated(date);
@@ -174,6 +184,27 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
     var url = "materias/" + $scope.id + "/aproveitamento/" + dateFormated + "/";
     fbHelper.addRegistro(url, $scope.aprv, undefined);
 
+    var urlAprov = "aproveitamento/" + dateFormated + "/" + $scope.id + "/" ;
+
+    var updates = {};
+
+    // adicionando aproveitamento por topico
+    for (var tpc in $scope.topicosSelecionados) {
+
+        var urlTpcs = urlAprov + $scope.topicosSelecionados[tpc].key + "/" ;
+        var regTpcs = $scope.topicosSelecionados[tpc];
+
+        regTpcs.key = fbHelper.getKey(urlTpcs);
+        regTpcs.acertos = $scope.aprv.acertos;
+        regTpcs.erros = $scope.aprv.erros;
+        regTpcs.total = $scope.aprv.total;
+        delete regTpcs.$$hashKey;
+
+        updates[urlTpcs + regTpcs.key] = regTpcs;
+        //fbHelper.addRegistro(urlTpcs, regTpcs , undefined);
+    }
+
+    fbHelper.updateRegistros(updates);
   }
 
   var getDateFormated = function(date) {
@@ -186,10 +217,10 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
            ].join('');
   }
 
-  $scope.registrarHrEstudo = function()
-  {
+  // registrar periodo de estudo
+  $scope.registrarHrEstudo = function()  {
     var date = new Date();
-    var dateFormated = getDateFormated(date);
+    var dateFormated = getDateFormated($scope.hr.data);
 
     $scope.hr.date = date;
 
@@ -202,9 +233,48 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
     var urlHOras = "horas/" + dateFormated + "/";
     fbHelper.addRegistro(urlHOras, $scope.hr, undefined);
 
+    for (var tp in $scope.topicosSelecionadosHr ) {
+        var tpc = $scope.topicosSelecionadosHr[tp];
+        if (tpc.horas == undefined){
+          tpc.horas = 0;
+        }
+        tpc.horas += tpc.hr;
+        var urlTpc = 'topicos/' + $scope.id + '/';
+        delete tpc.$$hashKey;
+
+        fbHelper.updateRegistro(urlTpc, tpc.key, tpc);
+    }
+
     $scope.hr = {};
   }
 
+  // totalizando aproveitamento
+  $scope.totalizarAproveitamento = function(){
+    $scope.aprv.total = $scope.aprv.erros + $scope.aprv.acertos;
+  }
+
+  // atualiza lista de topicos
+  var updateListaTopicos = function(lista){
+    $scope.topicoList = [];
+
+    for (var l in lista) {
+      $scope.topicoList.push(lista[l]);
+    }
+
+  }
+
+  // fbHelper.addRegistro(urlTopicos, $scope.hr, 10);
+  var fetchTopicos = function() {
+    fbHelper.fetchRegistro(urlTopicos, updateListaTopicos);
+  };
+
+  // carregar topicos
+  fetchTopicos();
+
+  // registra topico
+  $scope.registrarTopico = function() {
+    fbHelper.addRegistro(urlTopicos, $scope.topico, undefined);
+  }
 
 })
 .controller('jogoFCardController', function($scope, $http, $routeParams, fbHelper) {
@@ -213,17 +283,16 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
   $scope.fCard = {};
   $scope.id = $routeParams.id;
 
+  var fCardApr = {};
   var indexCard = 0;
   var cards =[];
   var pergunta = true;
 
-  var carregarCard = function()
-  {
+  var carregarCard = function(){
     $scope.fCard = $scope.registro.flashcard[cards[indexCard]];
   }
 
-  var updateRegistro = function(value)
-  {
+  var updateRegistro = function(value){
     $scope.registro = value;
 
     var x;
@@ -234,10 +303,13 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
     carregarCard();
   };
 
+  var updateFCardApr = function(value){
+    fCardApr = value;
+  }
+
   var fetchRegistro = function(id) {
-
     fbHelper.fetchRegistro('materias/' + id, updateRegistro);
-
+    fbHelper.fetchRegistro('flashcard/' + id, updateFCardApr);
   };
 
   $scope.showPergunta = function()
@@ -295,6 +367,11 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
   {
     calcularAproveitamento();
     fbHelper.updateRegistro('materias/' + $scope.id + '/flashcard/', $scope.fCard.key, $scope.fCard);
+
+    //var fc = {};
+    //var urlFcard = 'flashcard/' + $scope.id ;
+    //fc.key = fbHelper.getKey(urlFcard);
+    //fbHelper.updateRegistro(urlFcard, fc.key, fc);
   }
 
   // TOFIX : terá problema ao ser alterado ao mesmo tempo

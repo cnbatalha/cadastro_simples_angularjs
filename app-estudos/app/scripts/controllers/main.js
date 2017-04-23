@@ -19,14 +19,59 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
     var listaBarras = [];
     var listaSemana = [];
     var totalSemana = 0;
+    var listaAprv = {};
 
     $scope.chtBarras = {};
     $scope.chtPizza = {};
     $scope.chtSemana = new ChartHelper().init();
+    $scope.chtAproveitamento = new ChartHelper().initBar();
 
     vm.chtPzData = {};
     $scope.chtPzLabel = {};
 
+    var updateListaAproveitamento = function(lista, key){
+
+      for (var vr in lista) {
+          // console.log(lista[vr]);
+          for (var ap in lista[vr]) {
+            if (lista[vr][ap].acertos !== undefined){
+              listaAprv[key].acertos += lista[vr][ap].acertos;
+              listaAprv[key].total += lista[vr][ap].total;
+            }
+          }
+      }
+
+      chartAproveitamento();
+      $scope.$apply();
+    }
+
+    var processaChartAproveitamento = function(idMateria, materia){
+      var urlAproveitamento = 'materias/' + idMateria + '/aproveitamento/';
+
+      if (listaAprv[idMateria] == undefined){
+       listaAprv[idMateria] = {}
+       listaAprv[idMateria].acertos = 0;
+       listaAprv[idMateria].total = 0;
+       listaAprv[idMateria].percentual = 0;
+       listaAprv[idMateria].materia = materia;
+      }
+
+      fbHelper.getRegistros(urlAproveitamento, undefined, updateListaAproveitamento, 7, idMateria);
+    }
+
+    var chartAproveitamento = function()
+    {
+      $scope.chtAproveitamento.labels = [];
+      $scope.chtAproveitamento.data = [];
+
+      for (var data in listaAprv) {
+        $scope.chtAproveitamento.labels.push(listaAprv[data].materia);
+        var perc =  Math.round( (listaAprv[data].acertos/listaAprv[data].total)*100);
+        $scope.chtAproveitamento .data.push(perc);
+      }
+    }
+
+    // processa chart Semanal
     var processaChartSemanal = function(materia, minutos)
     {
       if ( listaSemana[materia] == undefined){
@@ -39,6 +84,7 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
       totalSemana += minutos;
     }
 
+    // gera gráfico Semanal
     var chartSemana = function(){
 
       for (var data in listaSemana) {
@@ -75,6 +121,8 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
             listaBarras[lista[data].key].push(sessao);
             // chart semanal
             processaChartSemanal(lista[data][apv].materia, lista[data][apv].minutos);
+            //
+            processaChartAproveitamento(lista[data][apv].materiakey, lista[data][apv].materia);
           }
         }
 
@@ -124,6 +172,7 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
       chartBarras(registros);
       chartSemana();
       //chartPizza(registros);
+      chartAproveitamento();
 
       $scope.$apply();
     }

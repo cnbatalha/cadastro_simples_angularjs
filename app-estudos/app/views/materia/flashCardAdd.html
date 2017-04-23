@@ -1,0 +1,35 @@
+<form ng-submit="addFCard()" name="frmCadastro" class="form">
+  <div class="row">
+    <div class="col-sm-5 col-md-5">
+      <div class="form-group">
+        <label> Pergunta </label>
+        <textarea class="form-control" rows="5" ng-model="fCard.pergunta"> </textarea>
+      </div>
+    </div>
+    <div class="col-sm-5 col-md-5">
+      <div class="form-group">
+        <label> Resposta </label>
+        <textarea class="form-control" rows="5" ng-model="fCard.resposta"> </textarea>
+      </div>
+    </div>
+  </div>
+  <input type="submit" class="btn btn-primary" value="OK"/>
+  <a class="btn btn-primary" href="#!/jogofcard/{{id}}">Jogar</a>
+</form>
+
+<br>
+
+<table class="table">
+  <thead>
+    <th> Pergunta </th>
+    <th> Resposta </th>
+    <th> Aproveitmento </th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="m in fCards">
+        <td>{{m.pergunta}}</td>
+        <td>{{m.resposta}}</td>
+        <td>{{m.aproveitamento}} %</td>
+    </tr>
+  </tbody>
+</table>

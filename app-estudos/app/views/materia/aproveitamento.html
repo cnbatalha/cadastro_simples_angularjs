@@ -1,0 +1,79 @@
+<div class="row">
+  <form ng-submit="registrarAproveitamento()" name="frmCadastro" class="form-inline">
+        <!-- ACERTOS -->
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                  <h3 class="panel-title">Acertos</h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label> Acertos </label>
+                <input class="form-control" ng-change="totalizarAproveitamento()" required="true" ng-model="aprv.acertos" value="0" type="number"> </input>
+              </div>
+              <div class="form-group">
+                <label> Erros </label>
+                <input class="form-control" ng-change="totalizarAproveitamento()" ng-model="aprv.erros" value="0" type="number"> </input>
+              </div>
+              <label> Total: {{aprv.total}} </label>
+            </div>
+          </div>
+        </div>
+        <!-- TOPICOS -->
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                  <h3 class="panel-title">Topicos</h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 ">
+                  <label> Topicos </label>
+                  <input class="form-control" type="text" id="query" ng-model="query"/>
+                  <ul id="topicos_ul" class="list-group" ng-show="showGrid">
+                    <a ng-click="selecionarTopico(m)" ng-repeat="m in topicoList | filter:query | orderBy: orderList | limitTo: 3" class="list-group-item">
+                      {{m.nome}}</a>
+                  </ul>
+                </div>
+                <div class="col-md-12 col-sm-12 ">
+                  <table class="table">
+                    <thead>
+                      <th> Tópico </th>
+                      <th> Acertos </th>
+                      <th> Erros </th>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="n in topicosSelecionados | orderBy: orderList">
+                		    <td>{{n.nome}}</td>
+                        <td>{{n.acertos}}</td>
+                        <td><input class="form-control" ng-model="n.erros" value="0" type="number"> </input></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" class="btn btn-primary" value="OK"/>
+        </div>
+  </form>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+          <h3 class="panel-title">Aproveitamneto Matéria</h3>
+    </div>
+    <div class="panel-body">
+      <canvas id="pie" class="chart chart-bar"
+        chart-data="chtBarras.data" chart-labels="chtBarras.labels" chart-options="chtBarras.options" chart-series="chtBarras.series"
+        chart-colors="chtBarras.colors">
+      </canvas>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+
+<div class="row">
+  <form ng-submit="registrarHrEstudo()" name="frmCadastro" class="form-inline">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+            <h3 class="panel-title">Periodo de Estudo</h3>
+      </div>
+      <div class="panel-body">
+            <div class="form-group">
+              <label> Data </label>
+              <input class="form-control" ng-model="hr.data" required="true" value="0" type="date"> </input>
+            </div>
+            <div class="form-group">
+              <label> Período (minutos) </label>
+              <input class="form-control" ng-model="hr.minutos" required="true" value="0" type="number"> </input>
+            </div>
+            <input type="submit" class="btn btn-primary" value="OK"/>
+      </div>
+    </div>
+  </div>
+  <!-- TOPICOS -->
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+            <h3 class="panel-title">Topicos</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <div class="col-md-6 col-sm-6 ">
+            <label> Topicos </label>
+            <input class="form-control" type="text" id="query" ng-model="query" ng-change="ativarGrid(query)"/>
+            <ul id="topicos_ul" class="list-group" ng-show="showGrid">
+              <a ng-click="selecionarTopicoHr(m)" ng-repeat="m in topicoList | filter:query | orderBy: orderList | limitTo: 3" class="list-group-item">
+                {{m.nome}}</a>
+            </ul>
+          </div>
+          <div class="col-md-12 col-sm-12 ">
+            <table class="table">
+              <thead>
+                <th> Tópico </th>
+                <th> Acertos </th>
+                <th> Erros </th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="n in topicosSelecionadosHr | orderBy: orderList">
+                  <td>{{n.nome}}</td>
+                  <td><input class="form-control" ng-model="n.hr" value="0" type="number"> </input></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+
+<div class="row">
+  <canvas id="pie" class="chart chart-bar"
+    chart-data="chtBarras.data" chart-labels="chtBarras.labels" chart-options="chtBarras.options" chart-series="chtBarras.series"
+    chart-colors="chtBarras.colors">
+  </canvas>
+</div>

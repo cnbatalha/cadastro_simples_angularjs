@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+        <button class="btn btn-default pull-right">New</button>
+        <h3 class="panel-title">Matéria</h3>
+        <div class="clearfix"></div>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <label> Nome </label> <input type="text" class="form-control"
+      ng-model="materia" required="required">
+    </div>
+  </div>
+</div>
+<!-- adicionar nova revisao -->
+<form ng-submit="registrarRevisao()" name="frmCadastro">
+<div class="panel panel-default" ng-show="true">
+  <div class="panel-heading">
+        <input  type="submit" class="btn btn-default pull-right">
+        <h3 class="panel-title">Revisões</h3>
+  </div>
+  <div class="panel-body">
+    <div class="form-group form-inline">
+      <label> Material </label> <input type="text" class="form-control"
+      ng-model="registro.material" required="required">
+      <button class="btn btn-default pull-right" ng-click="addPadrao()">Add Padrao</button>
+    </div>
+    <div class="form-group form-inline">
+      <label> Tipo </label>
+      <input type="text" class="form-control" ng-model="rv.tipo" required="required">
+      <label> Data </label> <input type="date" class="form-control"
+      ng-model="rv.data" required="required">
+      <input type="checkbox" name="vehicle" ng-model="rv.status"
+           ng-true-value="'Y'" ng-false-value="'N'" value="Bike">OK<br>
+      <button class="btn btn-default pull-right" ng-click="addData()">Add</button>
+    </div>
+    <div class="form-group form-inline">
+      <table class="table">
+        <thead>
+          <th> Tipo </th>
+          <th> Data </th>
+          <th> Status </th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="n in registro.rvs">
+            <td>{{n.tipo}}</td>
+            <td><input type="date" class="form-control" ng-model="n.data" required="required"></td>
+            <td>{{n.status}}</td>
+            <td><a ng-click="removerData(n)">X</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</form>
+<!-- lista de revisao -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+        <h3 class="panel-title">Topicos</h3>
+  </div>
+  <div class="panel-body">
+      <div class="col-md-12 col-sm-12 ">
+        <table class="table">
+          <thead>
+            <th> Matéria </th>
+            <th> Revisao Atual </th>
+            <th> Proxima Revisao </th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="n in registros">
+              <td>{{n.material}}</td>
+              <td>{{n.atual}}</td>
+              <td>{{n.proxima}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>

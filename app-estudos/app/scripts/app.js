@@ -55,6 +55,11 @@ angular
         controller: 'agendaController',
         controllerAs: 'notas'
       })
+      .when('/revisao/:id/:nome', {
+        templateUrl: 'views/materia/revisao.html',
+        controller: 'revisaoController',
+        controllerAs: 'ctrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

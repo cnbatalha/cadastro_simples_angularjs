@@ -405,4 +405,103 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
 
   fetchRegistro($scope.id);
 
+})
+.controller('revisaoController', function($scope, $http, $routeParams, fbHelper) {
+
+  var nomeMateria = $routeParams.nome;
+  var idMateria = $routeParams.id;
+
+  $scope.id = $routeParams.id;
+  $scope.registro = {};
+  $scope.registro.rvs = [];
+  $scope.registros = {};
+
+  $scope.rv = {};
+
+  var urlRevisao = 'revisao/'+ $scope.id + '/' ;
+
+
+  var getDateFormated = function(d) {
+    var date = new Date(d);
+    var mm = date.getMonth() + 1; // getMonth() is zero-based
+    var dd = date.getDate();
+
+    return [date.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+           ].join('');
+  }
+
+  $scope.registrarRevisao = function(){
+
+      for (var rv in $scope.registro.rvs) {
+          delete $scope.registro.rvs[rv].$$hashKey;
+      }
+
+      fbHelper.addRegistro(urlRevisao, $scope.registro, undefined);
+
+      for (var rv in $scope.registro.rvs) {
+        var agendaItem = $scope.registro.rvs[rv];
+        agendaItem.materia = nomeMateria;
+        agendaItem.materiaKey = idMateria;
+
+        var urlAgenda = 'agenda/' + getDateFormated($scope.registro.rvs[rv].data) + '/';
+
+        fbHelper.addRegistro(urlAgenda, agendaItem, undefined);
+      }
+
+  }
+
+  var updateRegistros = function(lista){
+    $scope.registros = lista;
+
+    $scope.$apply();
+  }
+
+  fbHelper.fetchRegistro(urlRevisao, updateRegistros);
+
+  $scope.addPadrao = function(){
+
+    var today = new Date();
+    var rvPadrao = {};
+    rvPadrao.data = new Date(today);
+    rvPadrao.tipo = '24h';
+    rvPadrao.status = 'N'
+    $scope.registro.rvs.push(rvPadrao);
+
+    rvPadrao = {};
+    rvPadrao.data = new Date(today);
+    rvPadrao.data.setDate(today.getDate() + 7);
+    rvPadrao.tipo = '7 Dias';
+    rvPadrao.status = 'N'
+    $scope.registro.rvs.push(rvPadrao);
+
+    rvPadrao = {};
+    rvPadrao.data = new Date(today);
+    rvPadrao.data.setDate(today.getDate() + 30);
+    rvPadrao.tipo = '30 Dias';
+    rvPadrao.status = 'N'
+    $scope.registro.rvs.push(rvPadrao);
+
+    rvPadrao = {};
+    rvPadrao.data = new Date(today);
+    rvPadrao.data.setDate(today.getDate() + 60);
+    rvPadrao.tipo = '60 Dias';
+    rvPadrao.status = 'N'
+    $scope.registro.rvs.push(rvPadrao);
+
+  }
+
+  $scope.removerData = function(value){
+
+    var index = $scope.registro.rvs.valueOf(value);
+    $scope.registro.rvs.splice(index, 1);
+
+  }
+
+  $scope.addData =  function(){
+    $scope.registro.rvs.push($scope.rv);
+  }
+
+
 });

@@ -411,6 +411,7 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
   var nomeMateria = $routeParams.nome;
   var idMateria = $routeParams.id;
 
+  $scope.nomeMateria = $routeParams.nome;
   $scope.id = $routeParams.id;
   $scope.registro = {};
   $scope.registro.rvs = [];
@@ -443,6 +444,7 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
       for (var rv in $scope.registro.rvs) {
         var agendaItem = $scope.registro.rvs[rv];
         agendaItem.materia = nomeMateria;
+        agendaItem.material = $scope.registro.material;
         agendaItem.materiaKey = idMateria;
 
         var urlAgenda = 'agenda/' + getDateFormated($scope.registro.rvs[rv].data) + '/';
@@ -461,6 +463,15 @@ materiaModule.controller('materiaController', function($scope, fbHelper) {
   fbHelper.fetchRegistro(urlRevisao, updateRegistros);
 
   $scope.addPadrao = function(){
+
+    if ($scope.registro.material === undefined){
+      return 0;
+    }
+
+    if ($scope.registro.material === ''){
+      return 0;
+    }
+
 
     var today = new Date();
     var rvPadrao = {};

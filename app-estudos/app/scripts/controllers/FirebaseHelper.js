@@ -19,10 +19,15 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
         var materiaRef = firebase.database().ref(url)
                   .limitToLast(limit);
       }
+      else if (order === 'value'){
+        var materiaRef = firebase.database().ref(url)
+                  .limitToFirst(limit);
+      }
       else {
         var materiaRef = firebase.database().ref(url).orderByChild(order)
                   .limitToLast(limit);
       }
+
 
       materiaRef.on('value', function(data) {
 

@@ -1,4 +1,33 @@
 
+
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+          <h3 class="panel-title">Revisões</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table">
+        <thead>
+          <th> Data </th>
+          <th> Materia </th>
+          <th> Material </th>
+          <th> Status </th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="n in agendamento | limitTo: 10">
+            <td>{{n.data}}</td>
+            <td>{{n.materia}}</td>
+            <td>{{n.material}}</td>
+            <td>{{n.status}}</td>
+            <td><a ng-click="concluirRevisao(n)">X</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
   <div class="panel panel-default">
     <div class="panel-heading">

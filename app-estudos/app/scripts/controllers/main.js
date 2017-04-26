@@ -15,6 +15,8 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
     var vm = this;
 
     var url = 'horas/'
+    var urlAgenda = 'agenda/'
+
     var registros = {};
     var listaBarras = [];
     var listaSemana = [];
@@ -26,8 +28,26 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
     $scope.chtSemana = new ChartHelper().init();
     $scope.chtAproveitamento = new ChartHelper().initBar();
 
+    $scope.agendamento = {};
+
     vm.chtPzData = {};
     $scope.chtPzLabel = {};
+
+    // carregando agendamentos
+    var updateAgendamento = function(lista){
+
+      $scope.agendamento = [];
+      for (var dia in lista) {
+          for (var agn in lista[dia]) {
+            if ( lista[dia][agn].data !== undefined){
+              $scope.agendamento.push(lista[dia][agn]);
+            }
+          }
+      }
+
+    }
+
+    fbHelper.getRegistros(urlAgenda, 'value', updateAgendamento, 10);
 
     var updateListaAproveitamento = function(lista, key){
 

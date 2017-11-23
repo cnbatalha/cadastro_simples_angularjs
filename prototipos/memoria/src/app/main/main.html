@@ -1,0 +1,43 @@
+<div class="container">
+
+  <div>
+    <acme-navbar ></acme-navbar>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <ul  class="list-group" dnd-list="main.itens">
+        <li ng-repeat="item in main.itens | orderBy:'nome'"
+            ng-dblclick="main.doubleClick(item)"
+            dnd-draggable="item"
+            dnd-moved="main.itens.splice($index, 1)"
+            dnd-effect-allowed="move"
+            dnd-selected="models.selected = item"
+            ng-class="item.selected === true ? 'list-group-item active' :'list-group-item'">
+            {{item.nome}}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4" ng-repeat="gp in main.grupos">
+        <div class="panel panel-default">
+          <div ng-click="main.clickGrupo(gp)" class="panel-heading">{{gp.nome}}</div>
+          <div class="panel-body">
+            <ul  class="list-group" dnd-list="gp.list">
+              <li ng-dblclick="main.removeItem(item, gp)" ng-repeat="item in gp.list | orderBy:predicate track by $index"
+                  dnd-draggable="item"
+                  dnd-moved="gp.list.splice($index, 1)"
+                  dnd-effect-allowed="move"
+                  dnd-selected="models.selected = item"
+                  ng-class="item.tipo === gp.tipo ? 'list-group-item list-group-item-success' : 'list-group-item list-group-item-warning'">
+                  {{item.nome}}
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+  </div>
+
+</div>

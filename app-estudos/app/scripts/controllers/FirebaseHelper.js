@@ -86,6 +86,19 @@ fbHelper.service('fbHelper', function($http, $location, $rootScope) {
     return firebase.database().ref(url).push().getKey();
   }
 
+  // remove node
+  fb.removeRegistro = function(url)
+  {
+    return firebase.database().ref(url).remove();
+  }
+
+  // gera key no objeto
+  fb.getKeyObject = function(url, objeto)
+  {
+    objeto.key = firebase.database().ref(url).push().getKey();
+    return objeto;
+  }
+
   // atualizar registro
   fb.updateRegistro = function(url, idRegistro, registro) {
 

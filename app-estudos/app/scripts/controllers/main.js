@@ -14,21 +14,26 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
 
     var vm = this;
 
+    // urls
     var url = 'horas/'
     var urlAgenda = 'agenda/'
 
+    // listas de dados
     var registros = {};
     var listaBarras = [];
     var listaSemana = [];
     var totalSemana = 0;
     var listaAprv = {};
 
+    // dados dos gráficos
     $scope.chtBarras = {};
     $scope.chtPizza = {};
     $scope.chtSemana = new ChartHelper().init();
     $scope.chtAproveitamento = new ChartHelper().initBar();
 
+    // lsita de agendamento
     $scope.agendamento = {};
+    $scope.hrsEstudadas = {};
 
     vm.chtPzData = {};
     $scope.chtPzLabel = {};
@@ -47,8 +52,10 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
 
     }
 
+    // carregando registros de agendamento
     fbHelper.getRegistros(urlAgenda, 'value', updateAgendamento, 10);
 
+    // processando lista de aproveitamento
     var updateListaAproveitamento = function(lista, key){
 
       for (var vr in lista) {
@@ -65,6 +72,7 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
       $scope.$apply();
     }
 
+    //montado grádico de aproveitamento
     var processaChartAproveitamento = function(idMateria, materia){
       var urlAproveitamento = 'materias/' + idMateria + '/aproveitamento/';
 
@@ -104,6 +112,18 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
       totalSemana += minutos;
     }
 
+    $scope.hrsMedia = {};
+
+    // formatando minutos em hora
+    var getHrFormat = function( min ){
+
+       return Math.floor( min/60 ) + 'h ' + Math.floor( min%60 ) + ' minutos';
+       // Math.round10( min/60, -2) +' h ' +
+       // (min%60)*60 + ' minutos';
+        //Math.round( ((min/60) - Math.round( min/60 ))*60 ) +' minutos';
+
+    }
+
     // gera gráfico Semanal
     var chartSemana = function(){
 
@@ -113,6 +133,9 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
         $scope.chtSemana.data.push(perc);
       }
 
+      // calculando horas
+      $scope.hrsEstudadas = getHrFormat(totalSemana);
+      $scope.hrsMedia = getHrFormat(totalSemana/7);
     }
 
     // gerar grafico de barras
@@ -150,9 +173,6 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
       }
 
       $scope.chtBarras.data = totais;
-
-      // atualiza chart
-      // $scope.$apply();
     }
 
     // gera grafico diario
@@ -222,8 +242,56 @@ mainModule.controller('mainController', function($scope, $http, $routeParams, fb
         $scope.$apply();
     }
 
-    //$scope.$on('chart-create', function (evt, chart) {
-    //  console.log(chart);
-    //});
+
+    var getDateFormated = function(d) {
+        var date = new Date(d);
+        var mm = date.getMonth() + 1; // getMonth() is zero-based
+        var dd = date.getDate();
+
+        return [date.getFullYear(),
+                (mm>9 ? '' : '0') + mm,
+                (dd>9 ? '' : '0') + dd
+               ].join('');
+      }
+
+    $scope.formatDate = function(d){
+      var date = new Date(d.data);
+      var mm = date.getMonth() + 1; // getMonth() is zero-based
+      var dd = date.getDate();
+
+      var today = new Date();
+
+      if (today.getTime() > date.getTime() )
+      {
+        d.class = 'danger';
+      }
+      return [date.getFullYear(),
+              (mm>9 ? '' : '0') + mm,
+              (dd>9 ? '' : '0') + dd
+            ].join('-');
+
+    }
+
+    var urlRevisao = '';
+
+    var updateRevisao = function(r){
+
+      r.status = 'S';
+      var updates = {};
+      updates[urlRevisao] = r;
+
+      fbHelper.updateRegistros(updates);
+    }
+
+    $scope.concluirRevisao = function(n){
+        // revisao / idMateria / idmaterial / rvs / idrevisao
+        var strDate = getDateFormated(n.data);
+        urlRevisao = 'revisao/'+ n.materiaKey + '/' + n.materialKey + '/rvs/' + n.key;
+        var urlAgendaUpdate = 'agenda/' + strDate + '/' + n.key;
+
+        // console.log(n);
+        fbHelper.removeRegistro(urlAgendaUpdate);
+        fbHelper.fetchRegistro(urlRevisao, updateRevisao);
+    }
 
   });
